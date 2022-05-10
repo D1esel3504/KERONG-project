@@ -27,6 +27,8 @@ const Controllers = () => {
 
   const goToBoard = (id) => navigate(`/boards/${id}`)
 
+
+
   return (
     <div>
       <div className='info'>

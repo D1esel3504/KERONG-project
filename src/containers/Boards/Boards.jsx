@@ -12,7 +12,7 @@ const Boards = () => {
 
 
   const getBoardfromApi = () => fetch(`https://tms-js-pro-back-end.herokuapp.com/api/meet-rooms/${id}`)
-
+  
   useEffect(() => {
     const getAllControllers = async () => {
       try {
@@ -27,13 +27,18 @@ const Boards = () => {
     getAllControllers()
   }, [])
 
+  const filterBoards = () => {
+    const oneBoard =  boards.filter(i => i === i.id)
+    setBoard(oneBoard)
+  }
+
   return (
     <div>
       <div className='info'>
         <div>
           <h1>BOARDS:</h1>
           {boards.length ? boards.map(i => (
-            <div>
+            <div onClick={() => filterBoards(i.id)}>
               <span>NUMBER - {i.floor}</span>
               <div>
                 <ul>
