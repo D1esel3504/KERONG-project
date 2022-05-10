@@ -12,7 +12,7 @@ const Boards = () => {
 
 
   const getBoardfromApi = () => fetch(`https://tms-js-pro-back-end.herokuapp.com/api/meet-rooms/${id}`)
-  
+
   useEffect(() => {
     const getAllControllers = async () => {
       try {
@@ -27,8 +27,8 @@ const Boards = () => {
     getAllControllers()
   }, [])
 
-  const filterBoards = () => {
-    const oneBoard =  boards.filter(i => i === i.id)
+  const filterBoards = (id) => {
+    const oneBoard = boards.filter(i => i.id === id)
     setBoard(oneBoard)
   }
 
@@ -50,7 +50,7 @@ const Boards = () => {
                 </ul>
               </div>
             </div>
-          )): 'NO BOARDS AND LOCKS'}
+          )) : 'NO BOARDS AND LOCKS'}
         </div>
         <CheckLocks />
       </div>
