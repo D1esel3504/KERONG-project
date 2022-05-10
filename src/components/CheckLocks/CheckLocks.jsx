@@ -62,7 +62,7 @@ const CheckLocks = () => {
         try {
             const result = await requestForLockonServer(lock.id)
             const json = await result.json();
-            console.log('Успех:', JSON.stringify(json));
+            console.log('Success:', JSON.stringify(json));
             setLock(json)
         } catch (error) {
             console.error('error-' + error)
@@ -70,12 +70,6 @@ const CheckLocks = () => {
     }
 
 
-
-
-
-
-
-    console.log(lock);
     return (
         <div>
             <h1>CHECK LOCK</h1>
@@ -84,11 +78,11 @@ const CheckLocks = () => {
                 <button onClick={searchLock}>SEARCH</button>
             </div>
             {lock.length !== 0 ? (
-                <div>
-                    <span> NUMBER - {lock.floor}</span>
-                    <span> COMMENT - {lock.address}</span>
-                    <button onClick={openLockOnServer}>OPEN</button>
-                </div>
+                <ul>
+                    <li> NUMBER - {lock.floor}</li>
+                    <li> COMMENT - {lock.address}</li>
+                    <button onClick={openLockOnServer}>OPEN LOCK</button>
+                </ul>
             ) : ''}
         </div>
     )
