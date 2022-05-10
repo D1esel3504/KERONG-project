@@ -43,11 +43,11 @@ const Boards = () => {
               <div>
                 <ul>
                   <li> NUMBER - {i.floor}</li>
-                  <li> COMMENT - {i.address}
-                    <button>EDIT</button>
-                  </li>
+                  <li> COMMENT - {i.address}</li>
                   <li> STATUS - CLOSED</li>
                 </ul>
+                <button>EDIT COMMENT</button>
+                <button>OPEN LOCK</button>
               </div>
             </div>
           )) : 'NO BOARDS AND LOCKS'}

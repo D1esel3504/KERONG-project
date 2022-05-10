@@ -29,25 +29,12 @@ const CheckLocks = () => {
     }
 
     const requestForLockonServer = (lockNumber) => {
-        // const data = {
-        //     number,
-        //     ip,
-        //     boards: [
-        //         {
-        //             number,
-        //             locks: {
-        //                 number: {
-        //                     state: opened,
-        //                     comment,
-        //                 }
-        //             }
-        //         }
-        //     ]
-        // }
+
         const data = {
-            address: "22222222222222222222222222",
+            ...lock,
             floor: 333
         }
+
         return fetch(`https://tms-js-pro-back-end.herokuapp.com/api/meet-rooms/${lockNumber}`, {
             method: 'PUT',
             body: JSON.stringify(data),
@@ -78,11 +65,15 @@ const CheckLocks = () => {
                 <button onClick={searchLock}>SEARCH</button>
             </div>
             {lock.length !== 0 ? (
-                <ul>
-                    <li> NUMBER - {lock.floor}</li>
-                    <li> COMMENT - {lock.address}</li>
+                <div>
+                    <ul>
+                        <li> NUMBER - {lock.floor}</li>
+                        <li> COMMENT - {lock.address} </li>
+                        <li>STATUS - CLOSED</li>
+                    </ul>
+                    <button>EDIT COMMENT</button>
                     <button onClick={openLockOnServer}>OPEN LOCK</button>
-                </ul>
+                </div>
             ) : ''}
         </div>
     )
