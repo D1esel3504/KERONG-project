@@ -32,6 +32,8 @@ const Boards = () => {
     setBoard(oneBoard)
   }
 
+  console.log(boards);
+
   return (
     <div>
       <div className='info'>
@@ -41,20 +43,24 @@ const Boards = () => {
             <div onClick={() => filterBoards(i.id)}>
               <span>NUMBER - {i.floor}</span>
               <div>
-                <ul>
-                  <li> NUMBER - {i.floor}</li>
-                  <li> COMMENT - {i.address}</li>
-                  <li> STATUS - CLOSED</li>
-                </ul>
-                <button>EDIT COMMENT</button>
+                <span> NUMBER - {i.floor}</span>
+                <div>
+                  <span>COMMENT - {i.address}</span>
+                  <button>EDIT COMMENT</button>
+                </div>
+                <div>
+                <span> STATUS - CLOSED</span>
                 <button>OPEN LOCK</button>
               </div>
+
+
+            </div>
             </div>
           )) : 'NO BOARDS AND LOCKS'}
-        </div>
-        <CheckLocks />
       </div>
+      <CheckLocks />
     </div>
+    </div >
   )
 
 }

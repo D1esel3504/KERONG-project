@@ -6,8 +6,22 @@ import React, { useRef, useState } from 'react'
 const CheckLocks = () => {
     const [lock, setLock] = useState([])
     const lockInput = useRef()
+    let [commentInputComponent,setCommentInputComponent] = useState ('')
+    let [isShowEditInput, setisShowEditInput] = useState(false)
 
     // 620e6b45093f480016037d9a
+
+    let dataForChangeStatus = {
+        ...lock,
+        floor: 333
+    }
+
+    let dataForChangeComment = {
+        ...lock,
+        floor: commentInputComponent
+    }
+
+
 
 
     const checkLockOnServer = (lockNumber) => fetch(`https://tms-js-pro-back-end.herokuapp.com/api/meet-rooms/${lockNumber}`)
@@ -28,12 +42,7 @@ const CheckLocks = () => {
 
     }
 
-    const requestForLockonServer = (lockNumber) => {
-
-        const data = {
-            ...lock,
-            floor: 333
-        }
+    const requestForLockonServer = (lockNumber,data) => {
 
         return fetch(`https://tms-js-pro-back-end.herokuapp.com/api/meet-rooms/${lockNumber}`, {
             method: 'PUT',
@@ -45,9 +54,10 @@ const CheckLocks = () => {
         })
     }
 
+
     const openLockOnServer = async () => {
         try {
-            const result = await requestForLockonServer(lock.id)
+            const result = await requestForLockonServer(lock.id,dataForChangeStatus)
             const json = await result.json();
             console.log('Success:', JSON.stringify(json));
             setLock(json)
@@ -56,6 +66,26 @@ const CheckLocks = () => {
         }
     }
 
+    const changeCommentOnServer = async () => {
+        try {
+            const result = await requestForLockonServer(lock.id,dataForChangeComment)
+            const json = await result.json();
+            console.log('Success:', JSON.stringify(json));
+            setLock(json)
+            setisShowEditInput(false)
+        } catch (error) {
+            console.error('error-' + error)
+        }
+    }
+
+
+    let changeComment = (e) => {
+        setisShowEditInput(true)
+    }
+
+    let cancelEditComment = (e) => {
+        setisShowEditInput(false)
+    }
 
     return (
         <div>
@@ -66,15 +96,23 @@ const CheckLocks = () => {
             </div>
             {lock.length !== 0 ? (
                 <div>
-                    <ul>
-                        <li> NUMBER - {lock.floor}</li>
-                        <li> COMMENT - {lock.address} </li>
-                        <li>STATUS - CLOSED</li>
-                    </ul>
-                    <button>EDIT COMMENT</button>
-                    <button onClick={openLockOnServer}>OPEN LOCK</button>
+                    <span> NUMBER - {lock.floor}</span>
+                    {isShowEditInput ? (
+                        <div>
+                            <input onChange={(e) => setCommentInputComponent(e.target.value)} type="text" placeholder='ENTER THE COMMENT' />
+                            <button onClick={changeCommentOnServer}>SAVE COMMENT</button>
+                            <button onClick={cancelEditComment}>CANCEL</button>
+                        </div>
+                    ) : (<div>
+                        <span>COMMENT - {lock.floor}</span>
+                        <button onClick={changeComment}>EDIT COMMENT</button>
+                    </div>)}
+                    <div>
+                        <span>STATUS - CLOSED</span>
+                        <button onClick={openLockOnServer}>OPEN LOCK</button>
+                    </div>
                 </div>
-            ) : ''}
+            ) : 'LOCK NOT FOUND'}
         </div>
     )
 }
