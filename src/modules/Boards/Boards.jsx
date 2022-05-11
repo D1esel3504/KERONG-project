@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import CheckLocks from '../../components/CheckLocks';
+import './Boards.scss';
+
 
 const Boards = () => {
   let [boards, setBoard] = useState([]);
   let { id } = useParams();
 
-  let getBoardfromApi = () => fetch(`https://tms-js-pro-back-end.herokuapp.com/api/meet-rooms/${id}`);
+  let getBoardfromApi = () => fetch('https://tms-js-pro-back-end.herokuapp.com/api/meet-rooms/');
 
   useEffect(() => {
     let getAllControllers = async () => {
@@ -36,11 +37,12 @@ const Boards = () => {
   return (
     <div>
       <div className='info'>
-        <div>
-          <h1>BOARDS:</h1>
+      <h1>BOARDS:</h1>
+      <div className='boards'>
           {boards.length ? boards.map(i => (
-            <div onClick={() => filterBoards(i.id)}>
-              <span>NUMBER - {i.floor}</span>
+            <div>
+              <input onClick={() => filterBoards(i.id)} type="checkbox" name="boards"/>
+              <span >NUMBER OF BOARD- {i.floor}</span>
               <div>
                 <span> NUMBER - {i.floor}</span>
                 <div>
@@ -51,13 +53,10 @@ const Boards = () => {
                   <span> STATUS - CLOSED</span>
                   <button>OPEN LOCK</button>
                 </div>
-
-
               </div>
             </div>
           )) : 'NO BOARDS AND LOCKS'}
         </div>
-        <CheckLocks />
       </div>
     </div >
   );

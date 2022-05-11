@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
-import CheckLocks from '../../components/CheckLocks';
-import './Controllers.css';
+import './Controllers.scss';
 
 const Controllers = () => {
   let [controllers, SetControllers] = useState([]);
@@ -33,17 +32,16 @@ const Controllers = () => {
   return (
     <div>
       <div className='info'>
-        <div>
-          <h1>CONTROLLERS:</h1>
+      <h1>CONTROLLERS:</h1>
+        <div className='controllers'>
           {controllers && controllers.map(i => (
-            <ul>
+            <ul className='controllers__info'>
               <li>NUMBER - {i.floor}</li>
               <li>IP - {i.id}</li>
-              <button onClick={ () => goToBoard(i.id)}>GO TO THE BOARD</button>
+              <button onClick={() => goToBoard(i.id)}>GO TO THE BOARD</button>
             </ul>
           ))}
         </div>
-        <CheckLocks />
       </div>
     </div>
   );

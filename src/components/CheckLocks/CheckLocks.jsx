@@ -1,10 +1,10 @@
 import React, { useRef, useState } from 'react';
+import Lock from '../Lock/Lock';
 
 const CheckLocks = () => {
     let [lock, setLock] = useState([]);
     let [commentInputComponent,setCommentInputComponent] = useState ('');
     let [isShowEditInput, setisShowEditInput] = useState(false);
-
     let lockInput = useRef();
 
     let dataForChangeStatus = {
@@ -84,25 +84,14 @@ const CheckLocks = () => {
                 <input ref={lockInput} type="text" placeholder='ENTER THE NUMBER' />
                 <button onClick={searchLock}>SEARCH</button>
             </div>
-            {lock.length !== 0 ? (
-                <div>
-                    <span> NUMBER - {lock.floor}</span>
-                    {isShowEditInput ? (
-                        <div>
-                            <input onChange={(e) => setCommentInputComponent(e.target.value)} type="text" placeholder='ENTER THE COMMENT' />
-                            <button onClick={changeCommentOnServer}>SAVE COMMENT</button>
-                            <button onClick={() => setisShowEditInput(false)}>CANCEL</button>
-                        </div>
-                    ) : (<div>
-                        <span>COMMENT - {lock.floor}</span>
-                        <button onClick={() => setisShowEditInput(true)}>EDIT COMMENT</button>
-                    </div>)}
-                    <div>
-                        <span>STATUS - CLOSED</span>
-                        <button onClick={openLockOnServer}>OPEN LOCK</button>
-                    </div>
-                </div>
-            ) : 'LOCK NOT FOUND'}
+            <Lock
+             lock={lock}
+             openLockOnServer={openLockOnServer}
+             changeCommentOnServer={changeCommentOnServer}
+             setCommentInputComponent={setCommentInputComponent}
+             isShowEditInput={isShowEditInput}
+             setisShowEditInput={setisShowEditInput}
+            />
         </div>
     );
 };
