@@ -1,91 +1,81 @@
-import React, { useRef, useState } from 'react'
-
-
-
+import React, { useRef, useState } from 'react';
 
 const CheckLocks = () => {
-    const [lock, setLock] = useState([])
-    const lockInput = useRef()
-    let [commentInputComponent,setCommentInputComponent] = useState ('')
-    let [isShowEditInput, setisShowEditInput] = useState(false)
+    let [lock, setLock] = useState([]);
+    let [commentInputComponent,setCommentInputComponent] = useState ('');
+    let [isShowEditInput, setisShowEditInput] = useState(false);
 
-    // 620e6b45093f480016037d9a
+    let lockInput = useRef();
 
     let dataForChangeStatus = {
         ...lock,
-        floor: 333
-    }
+        floor: 333,
+    };
 
     let dataForChangeComment = {
         ...lock,
-        floor: commentInputComponent
-    }
+        floor: commentInputComponent,
+    };
 
+    let checkLockOnServer = (lockNumber) => fetch(`https://tms-js-pro-back-end.herokuapp.com/api/meet-rooms/${lockNumber}`);
 
-
-
-    const checkLockOnServer = (lockNumber) => fetch(`https://tms-js-pro-back-end.herokuapp.com/api/meet-rooms/${lockNumber}`)
-
-
-    const searchLock = async () => {
+    let searchLock = async () => {
         try {
             if (lockInput.current.value !== '') {
-                const result = await checkLockOnServer(lockInput.current.value)
-                const json = await result.json()
-                setLock(json)
-                lockInput.current.value = ''
+                let result = await checkLockOnServer(lockInput.current.value);
+                let json = await result.json();
+
+                setLock(json);
+
+                lockInput.current.value = '';
+
             }
+        } catch (error) {
+            console.error('error-' + error);
         }
-        catch (error) {
-            console.error('error-' + error)
-        }
+    };
 
-    }
-
-    const requestForLockonServer = (lockNumber,data) => {
-
-        return fetch(`https://tms-js-pro-back-end.herokuapp.com/api/meet-rooms/${lockNumber}`, {
+    let requestForLockonServer = (lockNumber,data) => {
+        return fetch(`https://tms-js-pro-back-end.herokuapp.com/api/meet-rooms/${lockNumber}`, 
+        {
             method: 'PUT',
             body: JSON.stringify(data),
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImtlbWFsa2FsYW5kYXJvdkBnbWFpbC5jb20iLCJpZCI6IjYxMDJiOWMxMmFhYTkwMGMwZTI2OGFkZSIsImV4cCI6MTY1NzMxNTM1NSwiaWF0IjoxNjUyMTMxMzU1fQ.c62OU82mCuRHxOZDMDyXaKhm3LYXS7kvywUXXfiMH2M`,
-            }
-        })
-    }
+            },
+        });
+    };
 
-
-    const openLockOnServer = async () => {
+    let openLockOnServer = async () => {
         try {
-            const result = await requestForLockonServer(lock.id,dataForChangeStatus)
-            const json = await result.json();
-            console.log('Success:', JSON.stringify(json));
-            setLock(json)
-        } catch (error) {
-            console.error('error-' + error)
-        }
-    }
+            let result = await requestForLockonServer(lock.id,dataForChangeStatus);
+            let json = await result.json();
 
-    const changeCommentOnServer = async () => {
+            console.log('Success:', JSON.stringify(json));
+
+            setLock(json);
+
+        } catch (error) {
+            console.error('error-' + error);
+        };
+    };
+
+    let changeCommentOnServer = async () => {
         try {
-            const result = await requestForLockonServer(lock.id,dataForChangeComment)
-            const json = await result.json();
+            let result = await requestForLockonServer(lock.id,dataForChangeComment)
+            let json = await result.json();
+
             console.log('Success:', JSON.stringify(json));
-            setLock(json)
-            setisShowEditInput(false)
+
+            setLock(json);
+
+            setisShowEditInput(false);
+
         } catch (error) {
-            console.error('error-' + error)
-        }
-    }
-
-
-    let changeComment = (e) => {
-        setisShowEditInput(true)
-    }
-
-    let cancelEditComment = (e) => {
-        setisShowEditInput(false)
-    }
+            console.error('error-' + error);
+        };
+    };
 
     return (
         <div>
@@ -101,20 +91,20 @@ const CheckLocks = () => {
                         <div>
                             <input onChange={(e) => setCommentInputComponent(e.target.value)} type="text" placeholder='ENTER THE COMMENT' />
                             <button onClick={changeCommentOnServer}>SAVE COMMENT</button>
-                            <button onClick={cancelEditComment}>CANCEL</button>
+                            <button onClick={() => setisShowEditInput(false)}>CANCEL</button>
                         </div>
                     ) : (<div>
                         <span>COMMENT - {lock.floor}</span>
-                        <button onClick={changeComment}>EDIT COMMENT</button>
+                        <button onClick={() => setisShowEditInput(true)}>EDIT COMMENT</button>
                     </div>)}
                     <div>
                         <span>STATUS - CLOSED</span>
                         <button onClick={openLockOnServer}>OPEN LOCK</button>
                     </div>
                 </div>
-            ) : 'LOCK NOT FOUND'}
+            ) : 'LOCK NOT FOUND'};
         </div>
-    )
-}
+    );
+};
 
-export default CheckLocks
+export default CheckLocks;

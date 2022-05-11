@@ -1,36 +1,35 @@
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
-import CheckLocks from '../../components/CheckLocks'
-
-
-
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import CheckLocks from '../../components/CheckLocks';
 
 const Boards = () => {
+  let [boards, setBoard] = useState([]);
+  let { id } = useParams();
 
-  const [boards, setBoard] = useState([])
-  const { id } = useParams()
-
-
-  const getBoardfromApi = () => fetch(`https://tms-js-pro-back-end.herokuapp.com/api/meet-rooms/${id}`)
+  let getBoardfromApi = () => fetch(`https://tms-js-pro-back-end.herokuapp.com/api/meet-rooms/${id}`);
 
   useEffect(() => {
-    const getAllControllers = async () => {
+    let getAllControllers = async () => {
+
       try {
-        const getBoard = await getBoardfromApi()
-        const result = await getBoard.json()
-        setBoard(result)
-      }
-      catch (error) {
+        let getBoard = await getBoardfromApi();
+        let result = await getBoard.json();
+
+        setBoard(result);
+      } catch (error) {
         console.error('error-' + error);
       }
     }
-    getAllControllers()
-  }, [])
 
-  const filterBoards = (id) => {
-    const oneBoard = boards.filter(i => i.id === id)
-    setBoard(oneBoard)
-  }
+    getAllControllers();
+
+  }, []);
+
+  let filterBoards = (id) => {
+    let oneBoard = boards.filter(i => i.id === id);
+
+    setBoard(oneBoard);
+  };
 
   console.log(boards);
 
@@ -49,20 +48,19 @@ const Boards = () => {
                   <button>EDIT COMMENT</button>
                 </div>
                 <div>
-                <span> STATUS - CLOSED</span>
-                <button>OPEN LOCK</button>
+                  <span> STATUS - CLOSED</span>
+                  <button>OPEN LOCK</button>
+                </div>
+
+
               </div>
-
-
             </div>
-            </div>
-          )) : 'NO BOARDS AND LOCKS'}
+          )) : 'NO BOARDS AND LOCKS'};
+        </div>
+        <CheckLocks />
       </div>
-      <CheckLocks />
-    </div>
     </div >
-  )
+  );
+};
 
-}
-
-export default Boards
+export default Boards;

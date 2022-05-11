@@ -1,33 +1,34 @@
-import React, { useEffect, useState } from 'react'
-import {useNavigate, useParams} from 'react-router-dom'
-import CheckLocks from '../../components/CheckLocks'
+import React, { useEffect, useState } from 'react';
+import {useNavigate, useParams} from 'react-router-dom';
+import CheckLocks from '../../components/CheckLocks';
 import './Controllers.css';
 
-
 const Controllers = () => {
-  const [controllers, SetControllers] = useState([])
-  const navigate = useNavigate()
-  const { id } = useParams()
+  let [controllers, SetControllers] = useState([]);
+  let navigate = useNavigate();
+  let { id } = useParams();
 
-  const getAllControllersfromApi = () => fetch('https://tms-js-pro-back-end.herokuapp.com/api/meet-rooms/')
+  let getAllControllersfromApi = () => fetch('https://tms-js-pro-back-end.herokuapp.com/api/meet-rooms/');
 
   useEffect(() => {
-    const getAllControllers = async () => {
+    let getAllControllers = async () => {
+
       try {
-        const getControllers = await getAllControllersfromApi()
-        const result = await getControllers.json()
-        SetControllers(result)
-      }
-      catch (error) {
+        let getControllers = await getAllControllersfromApi();
+        let result = await getControllers.json();
+
+        SetControllers(result);
+
+      } catch (error) {
         console.error('error-' + error);
-      }
+      } 
     }
-    getAllControllers()
-  }, [])
 
-  const goToBoard = (id) => navigate(`/boards/${id}`)
+    getAllControllers();
 
+  }, []);
 
+  let goToBoard = (id) => navigate(`/boards/${id}`);
 
   return (
     <div>
@@ -38,15 +39,14 @@ const Controllers = () => {
             <ul>
               <li>NUMBER - {i.floor}</li>
               <li>IP - {i.id}</li>
-              <button onClick={() => goToBoard(i.id)}>GO TO THE BOARD</button>
+              <button onClick={ () => goToBoard(i.id)}>GO TO THE BOARD</button>
             </ul>
           ))}
         </div>
         <CheckLocks />
       </div>
     </div>
-  )
-}
+  );
+};
 
-
-export default Controllers
+export default Controllers;
