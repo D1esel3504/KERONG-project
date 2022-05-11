@@ -10,6 +10,17 @@
   grid-gap: 15px;
 }
 
+.choosed-board {
+  font-weight: bold;
+  font-size: 25px;
+  text-decoration: underline;
+
+  &:hover {
+    color: #e33434;
+    cursor: pointer
+  }
+  
+}
 
 @media screen and (max-width: 1080px) {
   .info {
@@ -20,5 +31,7 @@
   .boards {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    text-align: center;
   }
 };

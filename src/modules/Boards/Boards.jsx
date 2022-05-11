@@ -41,12 +41,11 @@ const Boards = () => {
       <div className='boards'>
           {boards.length ? boards.map(i => (
             <div>
-              <input onClick={() => filterBoards(i.id)} type="checkbox" name="boards"/>
-              <span >NUMBER OF BOARD- {i.floor}</span>
+              <span className='choosed-board' onClick={() => filterBoards(i.id)}>BOARD - {i.floor}</span>
               <div>
                 <span> NUMBER - {i.floor}</span>
                 <div>
-                  <span>COMMENT - {i.address}</span>
+                  <span>COMMENT - {i.description}</span>
                   <button>EDIT COMMENT</button>
                 </div>
                 <div>
