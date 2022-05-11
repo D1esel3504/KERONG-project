@@ -55,7 +55,7 @@ const Boards = () => {
 
               </div>
             </div>
-          )) : 'NO BOARDS AND LOCKS'};
+          )) : 'NO BOARDS AND LOCKS'}
         </div>
         <CheckLocks />
       </div>

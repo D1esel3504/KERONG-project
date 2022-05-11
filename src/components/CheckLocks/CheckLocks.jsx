@@ -102,7 +102,7 @@ const CheckLocks = () => {
                         <button onClick={openLockOnServer}>OPEN LOCK</button>
                     </div>
                 </div>
-            ) : 'LOCK NOT FOUND'};
+            ) : 'LOCK NOT FOUND'}
         </div>
     );
 };
