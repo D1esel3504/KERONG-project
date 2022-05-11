@@ -10,11 +10,13 @@ const CheckLocks = () => {
     let dataForChangeStatus = {
         ...lock,
         floor: 333,
+        // state: opened,
     };
 
     let dataForChangeComment = {
         ...lock,
         floor: commentInputComponent,
+        // comment: commentInputComponent,
     };
 
     let checkLockOnServer = (lockNumber) => fetch(`https://tms-js-pro-back-end.herokuapp.com/api/meet-rooms/${lockNumber}`);
@@ -79,7 +81,7 @@ const CheckLocks = () => {
 
     return (
         <div>
-            <h1>CHECK LOCK</h1>
+            <h4>CHECK LOCK</h4>
             <div>
                 <input ref={lockInput} type="text" placeholder='ENTER THE NUMBER' />
                 <button onClick={searchLock}>SEARCH</button>
