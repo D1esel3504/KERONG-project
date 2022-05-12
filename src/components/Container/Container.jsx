@@ -14,27 +14,51 @@ const Container = ({ children }) => {
         {
           number: 1,
           locks: {
-            '0:00:01': {
+            '0:00:99': {
               state: 'closed',
-              comment: ''
+              comment: '',
+            },
+            '0:00:66': {
+              state: 'closed',
+              comment: '',
+            },
+            '0:00:77': {
+              state: 'closed',
+              comment: '',
             },
           }
         },
         {
           number: 2,
           locks: {
-            '0:00:02': {
+            '0:00:99': {
               state: 'closed',
-              comment: ''
+              comment: '',
+            },
+            '0:00:66': {
+              state: 'closed',
+              comment: '',
+            },
+            '0:00:77': {
+              state: 'closed',
+              comment: '',
             },
           }
         },
         {
           number: 3,
           locks: {
-            '0:00:03': {
+            '0:00:99': {
               state: 'closed',
-              comment: ''
+              comment: '',
+            },
+            '0:00:66': {
+              state: 'closed',
+              comment: '',
+            },
+            '0:00:77': {
+              state: 'closed',
+              comment: '',
             },
           }
         },
@@ -47,27 +71,51 @@ const Container = ({ children }) => {
         {
           number: 1,
           locks: {
-            '0:00:12': {
+            '0:00:99': {
               state: 'closed',
-              comment: ''
+              comment: '',
+            },
+            '0:00:66': {
+              state: 'closed',
+              comment: '',
+            },
+            '0:00:77': {
+              state: 'closed',
+              comment: '',
             },
           }
         },
         {
           number: 2,
           locks: {
-            '0:00:33': {
+            '0:00:99': {
               state: 'closed',
-              comment: ''
+              comment: '',
+            },
+            '0:00:66': {
+              state: 'closed',
+              comment: '',
+            },
+            '0:00:77': {
+              state: 'closed',
+              comment: '',
             },
           }
         },
         {
           number: 3,
           locks: {
-            '0:00:23': {
+            '0:00:99': {
               state: 'closed',
-              comment: ''
+              comment: '',
+            },
+            '0:00:66': {
+              state: 'closed',
+              comment: '',
+            },
+            '0:00:77': {
+              state: 'closed',
+              comment: '',
             },
           }
         },
@@ -80,18 +128,34 @@ const Container = ({ children }) => {
         {
           number: 1,
           locks: {
-            '0:00:44': {
+            '0:00:99': {
               state: 'closed',
-              comment: ''
+              comment: '',
+            },
+            '0:00:66': {
+              state: 'closed',
+              comment: '',
+            },
+            '0:00:77': {
+              state: 'closed',
+              comment: '',
             },
           }
         },
         {
           number: 2,
           locks: {
-            '0:00:78': {
+            '0:00:99': {
               state: 'closed',
-              comment: ''
+              comment: '',
+            },
+            '0:00:66': {
+              state: 'closed',
+              comment: '',
+            },
+            '0:00:77': {
+              state: 'closed',
+              comment: '',
             },
           }
         },
@@ -100,10 +164,18 @@ const Container = ({ children }) => {
           locks: {
             '0:00:99': {
               state: 'closed',
-              comment: ''
+              comment: '',
             },
-          }
-        },
+            '0:00:66': {
+              state: 'closed',
+              comment: '',
+            },
+            '0:00:77': {
+              state: 'closed',
+              comment: '',
+            },
+          },
+        }
       ],
     },
   ];

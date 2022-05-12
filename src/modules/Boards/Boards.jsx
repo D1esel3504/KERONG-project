@@ -5,51 +5,54 @@ import './Boards.scss';
 
 
 const Boards = () => {
-  let [boardsList, setBoardsList] = useState([]);
+  let [boardList, setBoardList] = useState([]);
   let { id } = useParams();
   let { controllersList } = useContext(Context);
 
-  // let filterBoards = (id) => {
-  //   let oneBoard = boards.filter(i => i.id === id);
-
-  //   setBoard(oneBoard);
-  // };
-
   useEffect(() => {
-    let boards = controllersList.filter(i => i.ip === id)
+    let controller = controllersList.filter(i => i.ip === id);
 
-    setBoardsList(boards)
-  }, [])
+    let boards = controller.reduce((acc, curr) => {
+      return [...acc, ...curr.boards]
+    }, [])
+
+    setBoardList(boards);
+    console.log(boardList);
+  }, []);
+
+  let filterBoards = (numberBoard) => {
+    let filtredBoard = boardList.filter(i => i.number === numberBoard)
+
+    setBoardList(filtredBoard)
+  };
 
   return (
     <div>
       <div className="info">
         <h1>BOARDS:</h1>
         <div className="boards">
-          {boardsList.length
-            ? boardsList.map(cntrl =>
-              cntrl.boards.map(board => (
-                <div>
-                  <span className="choosed-board">
-                    BOARD - {board.number}
-                  </span>
-                  {Object.keys(board.locks).map(lock => (
+          {boardList.length
+            ? boardList.map(board => (
+              <div>
+                <span onClick={() => filterBoards(board.number)} className="choosed-board">
+                  BOARD - {board.number}
+                </span>
+                {Object.keys(board.locks).map(lock => (
+                  <div>
+                    <span> NUMBER - {lock}</span>
                     <div>
-                      <span> NUMBER - {Object.keys(board.locks)[0]}</span>
-                      <div>
-                        <span>COMMENT - {board.locks[lock].comment}</span>
-                        <button>EDIT COMMENT</button>
-                      </div>
-                      <div>
-                        <span> STATUS - {board.locks[lock].state}</span>
-                        <button>OPEN LOCK</button>
-                      </div>
+                      <span>COMMENT - {board.locks[lock].comment}</span>
+                      <button>EDIT COMMENT</button>
                     </div>
-                  )
-                  )}
-                </div>
-              )),
-            )
+                    <div>
+                      <span> STATUS - {board.locks[lock].state}</span>
+                      <button>OPEN LOCK</button>
+                    </div>
+                  </div>
+                )
+                )}
+              </div>
+            ))
             : 'NO BOARDS AND LOCKS'}
         </div>
       </div>
