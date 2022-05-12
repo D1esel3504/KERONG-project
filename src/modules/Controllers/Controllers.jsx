@@ -1,44 +1,159 @@
 import React, { useEffect, useState } from 'react';
-import {useNavigate, useParams} from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import './Controllers.scss';
 
 const Controllers = () => {
-  let [controllers, SetControllers] = useState([]);
+  let [controllersList, SetControllersList] = useState([]);
   let navigate = useNavigate();
   let { id } = useParams();
 
-  let getAllControllersfromApi = () => fetch('https://tms-js-pro-back-end.herokuapp.com/api/meet-rooms/');
+  const MOCKED_CONTROLLERS = [
+    {
+      number: 1,
+      ip: '10.3.2.5',
+      boards: [
+        {
+          number: 1,
+          locks: {
+            '0:00:01': {
+              state: 'closed',
+              comment: ''
+            },
+          }
+        },
+        {
+          number: 2,
+          locks: {
+            '0:00:02': {
+              state: 'closed',
+              comment: ''
+            },
+          }
+        },
+        {
+          number: 3,
+          locks: {
+            '0:00:03': {
+              state: 'closed',
+              comment: ''
+            },
+          }
+        },
+      ],
+    },
+    {
+      number: 2,
+      ip: '10.3.2.6',
+      boards: [
+        {
+          number: 1,
+          locks: {
+            '0:00:12': {
+              state: 'closed',
+              comment: ''
+            },
+          }
+        },
+        {
+          number: 2,
+          locks: {
+            '0:00:33': {
+              state: 'closed',
+              comment: ''
+            },
+          }
+        },
+        {
+          number: 3,
+          locks: {
+            '0:00:23': {
+              state: 'closed',
+              comment: ''
+            },
+          }
+        },
+      ],
+    },
+    {
+      number: 3,
+      ip: '10.3.2.7',
+      boards: [
+        {
+          number: 1,
+          locks: {
+            '0:00:44': {
+              state: 'closed',
+              comment: ''
+            },
+          }
+        },
+        {
+          number: 2,
+          locks: {
+            '0:00:78': {
+              state: 'closed',
+              comment: ''
+            },
+          }
+        },
+        {
+          number: 3,
+          locks: {
+            '0:00:99': {
+              state: 'closed',
+              comment: ''
+            },
+          }
+        },
+      ],
+    },
+  ];
+
+  let getControllers = async () => {
+    let controllers = await Promise.resolve(MOCKED_CONTROLLERS);
+
+    SetControllersList(controllers)
+  }
 
   useEffect(() => {
-    let getAllControllers = async () => {
+    getControllers()
+  }, [])
 
-      try {
-        let getControllers = await getAllControllersfromApi();
-        let result = await getControllers.json();
+  // let getAllControllersfromApi = () => fetch('https://tms-js-pro-back-end.herokuapp.com/api/meet-rooms/');
 
-        SetControllers(result);
+  // useEffect(() => {
+  //   let getAllControllers = async () => {
 
-      } catch (error) {
-        console.error('error-' + error);
-      } 
-    }
+  //     try {
+  //       let getControllers = await getAllControllersfromApi();
+  //       let result = await getControllers.json();
 
-    getAllControllers();
+  //       SetControllersList(result);
 
-  }, []);
+  //     } catch (error) {
+  //       console.error('error-' + error);
+  //     }
+  //   }
 
-  let goToBoard = (id) => navigate(`/boards/${id}`);
+  //   getAllControllers();
+
+  // }, []);
+
+
+  console.log(controllersList);
+
+  let goToBoard = (ip) => navigate(`/boards/${ip}`);
 
   return (
     <div>
       <div className='info'>
-      <h1>CONTROLLERS:</h1>
+        <h1>CONTROLLERS:</h1>
         <div className='controllers'>
-          {controllers && controllers.map(i => (
+          {controllersList && controllersList.map(i => (
             <ul className='controllers__info'>
-              <li>NUMBER - {i.floor}</li>
-              <li>IP - {i.id}</li>
-              <button onClick={() => goToBoard(i.id)}>GO TO THE BOARD</button>
+              <li>NUMBER - {i.number}</li>
+              <li>IP - {i.ip}</li>
+              <button onClick={() => goToBoard(i.ip)}>GO TO THE BOARD</button>
             </ul>
           ))}
         </div>
