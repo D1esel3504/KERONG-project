@@ -6,10 +6,10 @@ import { Context } from '../../context';
 const Controllers = () => {
   let navigate = useNavigate();
   let { id } = useParams();
-  let { controllersList, getControllers } = useContext(Context)
+  let { controllersList, getControllers } = useContext(Context);
 
   useEffect(() => {
-    getControllers()
+    getControllers();
   }, [])
 
   let goToBoard = (ip) => navigate(`/boards/${ip}`);

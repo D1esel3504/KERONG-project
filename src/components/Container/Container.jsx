@@ -5,7 +5,7 @@ import logo from '../../image/logo.jpg'
 import './Container.scss';
 
 const Container = ({ children }) => {
-  let [controllersList, SetControllersList] = useState([]);
+  let [controllersList, setControllersList] = useState([]);
   const MOCKED_CONTROLLERS = [
     {
       number: 1,
@@ -112,7 +112,7 @@ const Container = ({ children }) => {
   let getControllers = async () => {
     let controllers = await Promise.resolve(MOCKED_CONTROLLERS);
 
-    SetControllersList(controllers)
+    setControllersList(controllers)
   }
 
 
