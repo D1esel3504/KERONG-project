@@ -3,9 +3,9 @@ import { useParams } from 'react-router-dom';
 import { Context } from '../../context';
 import './Boards.scss';
 
-
 const Boards = () => {
   let [boardList, setBoardList] = useState([]);
+  let [temp, setTemp] = useState([]);
   let [boardInput, setBoardInput] = useState('');
   let { id } = useParams();
   let { controllersList } = useContext(Context);
@@ -18,15 +18,17 @@ const Boards = () => {
     }, [])
 
     setBoardList(boards);
+
+    setTemp(boards);
   }, []);
 
   let filterBoards = (numberBoard) => {
-    let filtredBoard = boardList.filter(i => i.number === numberBoard);
+    let tempBoards = [...boardList];
 
-    setBoardList(filtredBoard);
+    let filtredBoard = tempBoards.filter(i => i.number.toString().includes(numberBoard));
+
+    setTemp(filtredBoard);
   };
-
-  console.log(boardInput);
 
   return (
     <div>
@@ -37,8 +39,8 @@ const Boards = () => {
           <button onClick={() => filterBoards(boardInput)}>SEARCH</button>
         </div>
         <div className="boards">
-          {boardList.length
-            ? boardList.map(board => (
+          {temp.length
+            ? temp.map(board => (
               <div>
                 <span onClick={() => filterBoards(board.number)} className="choosed-board">
                   BOARD - {board.number}
