@@ -6,6 +6,7 @@ import './Boards.scss';
 
 const Boards = () => {
   let [boardList, setBoardList] = useState([]);
+  let [boardInput, setBoardInput] = useState('');
   let { id } = useParams();
   let { controllersList } = useContext(Context);
 
@@ -17,19 +18,24 @@ const Boards = () => {
     }, [])
 
     setBoardList(boards);
-    console.log(boardList);
   }, []);
 
   let filterBoards = (numberBoard) => {
-    let filtredBoard = boardList.filter(i => i.number === numberBoard)
+    let filtredBoard = boardList.filter(i => i.number === numberBoard);
 
-    setBoardList(filtredBoard)
+    setBoardList(filtredBoard);
   };
+
+  console.log(boardInput);
 
   return (
     <div>
       <div className="info">
         <h1>BOARDS:</h1>
+        <div>
+          <input onChange={(e) => setBoardInput(e.target.value)} type="text" placeholder='THE NUMBER OF BOARD' />
+          <button onClick={() => filterBoards(boardInput)}>SEARCH</button>
+        </div>
         <div className="boards">
           {boardList.length
             ? boardList.map(board => (
