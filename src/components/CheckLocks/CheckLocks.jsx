@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import './CheckLocks.scss';
 import Lock from '../Lock/Lock';
 
 const CheckLocks = () => {
@@ -37,7 +38,7 @@ const CheckLocks = () => {
         }
     };
 
-    let requestForLockonServer = (lockNumber,data) => {
+    let requestForLockOnServer = (lockNumber,data) => {
         return fetch(`https://tms-js-pro-back-end.herokuapp.com/api/meet-rooms/${lockNumber}`, 
         {
             method: 'PUT',
@@ -51,10 +52,8 @@ const CheckLocks = () => {
 
     let openLockOnServer = async () => {
         try {
-            let result = await requestForLockonServer(lock.id,dataForChangeStatus);
+            let result = await requestForLockOnServer(lock.id,dataForChangeStatus);
             let json = await result.json();
-
-            console.log('Success:', JSON.stringify(json));
 
             setLock(json);
 
@@ -65,10 +64,8 @@ const CheckLocks = () => {
 
     let changeCommentOnServer = async () => {
         try {
-            let result = await requestForLockonServer(lock.id,dataForChangeComment)
+            let result = await requestForLockOnServer(lock.id,dataForChangeComment)
             let json = await result.json();
-
-            console.log('Success:', JSON.stringify(json));
 
             setLock(json);
 
@@ -80,8 +77,8 @@ const CheckLocks = () => {
     };
 
     return (
-        <div>
-            <h4>CHECK LOCK</h4>
+        <div className='check__block'>
+            <strong>CHECK LOCK</strong>
             <div>
                 <input ref={lockInput} type="text" placeholder='ENTER THE NUMBER' />
                 <button onClick={searchLock}>SEARCH</button>
