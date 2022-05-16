@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import Lock from '../../components/Lock/Lock';
 import { Context } from '../../context';
 import './Boards.scss';
 
@@ -46,17 +47,12 @@ const Boards = () => {
                   BOARD - {board.number}
                 </span>
                 {Object.keys(board.locks).map(lock => (
-                  <div>
-                    <span> NUMBER - {lock}</span>
-                    <div>
-                      <span>COMMENT - {board.locks[lock].comment}</span>
-                      <button>EDIT COMMENT</button>
-                    </div>
-                    <div>
-                      <span> STATUS - {board.locks[lock].state}</span>
-                      <button>OPEN LOCK</button>
-                    </div>
-                  </div>
+                  <Lock
+                    lock={{
+                      lockNumber: lock,
+                      ...board.locks[lock]
+                    }}
+                  />
                 )
                 )}
               </div>
