@@ -1,0 +1,14 @@
+.lock-block {
+    margin-top: 10px;
+}
+
+.lock-description {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &__buttons {
+        display: flex;
+        margin-left: 10px;
+    }
+}

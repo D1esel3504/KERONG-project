@@ -1,8 +1,11 @@
 import React, { useRef, useState } from 'react';
+import './CheckLocks.scss';
 import Lock from '../Lock/Lock';
+import { Button, Input } from 'antd';
+import { SearchOutlined } from '@ant-design/icons';
 
 const CheckLocks = () => {
-    let [lock, setLock] = useState([]);
+    let [lock, setLock] = useState(null);
     let lockInput = useRef();
 
     let checkLockOnServer = (lockNumber) => fetch(`https://tms-js-pro-back-end.herokuapp.com/api/meet-rooms/${lockNumber}`);
@@ -24,15 +27,28 @@ const CheckLocks = () => {
     };
 
     return (
-        <div>
-            <h4>CHECK LOCK</h4>
-            <div>
-                <input ref={lockInput} type="text" placeholder='ENTER THE NUMBER' />
-                <button onClick={searchLock}>SEARCH</button>
+        <div className='block'>
+            <strong>CHECK LOCK</strong>
+            <div className='search'>
+                <Input
+                    ref={lockInput}
+                    placeholder='ENTER THE NUMBER'
+                    allowClear
+                />
+                <Button
+                    style={{
+                        marginLeft: '10px'
+                    }}
+                    danger
+                    type="primary"
+                    onClick={searchLock}
+                    icon={<SearchOutlined />}>
+                    Search
+                </Button>
             </div>
             <Lock
-             lock={lock}
-             setLock={setLock}
+                lock={lock}
+                setLock={setLock}
             />
         </div>
     );
