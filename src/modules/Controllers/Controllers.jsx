@@ -2,6 +2,7 @@ import React, { useEffect, useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import './Controllers.scss';
 import { Context } from '../../context';
+import { Button } from 'antd';
 
 const Controllers = () => {
   let navigate = useNavigate();
@@ -23,7 +24,7 @@ const Controllers = () => {
             <ul className='controllers__info'>
               <li>NUMBER - {i.number}</li>
               <li>IP - {i.ip}</li>
-              <button onClick={() => goToBoard(i.ip)}>GO TO THE BOARD</button>
+              <Button type="primary" danger onClick={() => goToBoard(i.ip)}>GO TO THE BOARD</Button>
             </ul>
           ))}
         </div>

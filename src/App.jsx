@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
+import 'antd/dist/antd.css'
 import Container from './components/Container';
 import Boards from './modules/Boards/Boards';
 import Controllers from './modules/Controllers';
