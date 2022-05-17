@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useLocation } from 'react-router-dom';
 import CheckLocks from '../../components/CheckLocks';
 import { Context } from '../../context';
 import logo from '../../image/logo.jpg'
@@ -6,6 +7,8 @@ import './Container.scss';
 
 const Container = ({ children }) => {
   let [controllersList, setControllersList] = useState([]);
+  let location = useLocation();
+
   const MOCKED_CONTROLLERS = [
     {
       number: 1,
@@ -188,7 +191,7 @@ const Container = ({ children }) => {
   }
 
 
-    // let getAllControllersfromApi = () => fetch('https://tms-js-pro-back-end.herokuapp.com/api/meet-rooms/');
+  // let getAllControllersfromApi = () => fetch('https://tms-js-pro-back-end.herokuapp.com/api/meet-rooms/');
 
   // useEffect(() => {
   //   let getAllControllers = async () => {
@@ -209,11 +212,11 @@ const Container = ({ children }) => {
   // }, []);
 
   return (
-    <Context.Provider value={{controllersList, getControllers}}>
+    <Context.Provider value={{ controllersList, getControllers }}>
       <div className='container'>
         <div className='header'>
           <img className='header__logo' alt='logo' src={logo} />
-          <CheckLocks />
+          {location.pathname !== '/login' && <CheckLocks />}
         </div>
         <div>{children}</div>
       </div>
