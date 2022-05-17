@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { Form, Input, Button, Checkbox } from 'antd';
+import { Form, Input, Button, Checkbox, Alert } from 'antd';
 import 'antd/dist/antd.css';
 import './LoginForm.scss';
 
@@ -8,6 +8,7 @@ const LoginForm = () => {
   let history = useNavigate();
   let [userEmail, setEmail] = useState('');
   let [userPassword, setPassword] = useState('');
+  let [isShowAlert, setIsShowAlert] = useState(false);
 
   // 'kemalkalandarov@gmail.com'
   // 'test123'
@@ -30,10 +31,9 @@ const LoginForm = () => {
         if (response.status === 200) {
           history('/')
         }
-
       })
     } catch (error) {
-      console.log('SERVER ERROR')
+      setIsShowAlert(true);
     }
   }
 
@@ -76,6 +76,14 @@ const LoginForm = () => {
           </Button>
         </Form.Item>
       </Form>
+      {isShowAlert &&
+          <Alert
+            message="Error"
+            description="Check your email and password"
+            type="error"
+            showIcon
+            closable
+          />}
     </div>
   );
 };
