@@ -54,7 +54,6 @@ const Boards = () => {
     })
 
     setTemp(changedArr);
-    setBoardList(changedArr)
   }
 
   return (

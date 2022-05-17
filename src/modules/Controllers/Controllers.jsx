@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import './Controllers.scss';
 import { Context } from '../../context';
-import { Button, Typography } from 'antd';
+import { Button, Typography, Table } from 'antd';
 
 
 const Controllers = () => {
@@ -14,6 +14,21 @@ const Controllers = () => {
     getControllers();
   }, [])
 
+  let columns = [
+    {
+      title: 'Number',
+      dataIndex: 'number',
+    },
+    {
+      title: 'IP',
+      dataIndex: 'ip',
+    },
+    {
+      title: 'Boards',
+      render: ((boards) => <Button type="primary" danger onClick={() => goToBoard(boards.ip)}> GO TO THE BOARDS</Button>)
+    },
+  ]
+
   let goToBoard = (ip) => navigate(`/boards/${ip}`);
 
   return (
@@ -21,24 +36,14 @@ const Controllers = () => {
       <div className='info'>
         <Typography.Title level={1}>CONTROLLERS:</Typography.Title>
         <div className='controllers'>
-          {controllersList && controllersList.map(i => (
-            <ul className='controllers__info'>
-              <li>NUMBER - {i.number}</li>
-              <li>IP - {i.ip}</li>
-              <Button
-                type="primary"
-                danger
-                onClick={() => goToBoard(i.ip)}
-                size="large">
-                GO TO THE BOARD
-              </Button>
-            </ul>
-          ))}
+          <Table columns={columns} dataSource={controllersList} bordered/>
         </div>
       </div>
     </div>
+
   );
 };
 
 
 export default Controllers;
+

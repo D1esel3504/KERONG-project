@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useLocation } from 'react-router-dom';
 import CheckLocks from '../../components/CheckLocks';
 import { Context } from '../../context';
 import logo from '../../image/logo.jpg'
@@ -6,6 +7,7 @@ import './Container.scss';
 
 const Container = ({ children }) => {
   let [controllersList, setControllersList] = useState([]);
+  let location = useLocation();
   const MOCKED_CONTROLLERS = [
     {
       number: 1,
@@ -213,7 +215,7 @@ const Container = ({ children }) => {
       <div className='container'>
         <div className='header'>
           <img className='header__logo' alt='logo' src={logo} />
-          <CheckLocks />
+          {location.pathname !== '/login' && <CheckLocks />}
         </div>
         <div>{children}</div>
       </div>

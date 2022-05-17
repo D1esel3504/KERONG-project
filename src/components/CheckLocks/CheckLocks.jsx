@@ -8,6 +8,7 @@ const CheckLocks = () => {
     let [lock, setLock] = useState(null);
     let [isModalVisible, setIsModalVisible] = useState(false);
     let [lockInput, setLockInput] = useState('');
+    let [isShowAlert, setIsShowAlert] = useState(false);
 
     let showModal = () => {
         setIsModalVisible(true);
@@ -37,16 +38,9 @@ const CheckLocks = () => {
 
             }
         } catch (error) {
-            <Alert
-                message="Error"
-                description={error}
-                type="error"
-                showIcon
-            />
+            setIsShowAlert(true);
         }
     };
-
-
 
     return (
         <div className='block'>
@@ -68,6 +62,14 @@ const CheckLocks = () => {
                     Search
                 </Button>
             </div>
+            {isShowAlert &&
+                <Alert
+                    message="Error"
+                    description="SERVER ERROR"
+                    type="error"
+                    showIcon
+                    closable
+                />}
             <Modal title={`LOCK - ${lockInput}`} visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
                 <Lock
                     lock={lock}
