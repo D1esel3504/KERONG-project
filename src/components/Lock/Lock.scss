@@ -11,4 +11,17 @@
         display: flex;
         margin-left: 10px;
     }
+
+    &__comment {
+        max-width: 300px;
+    }
+
+}
+
+
+@media screen and (max-width: 450px) {
+    .lock-description__comment {
+        font-size: 10px;
+        max-width: 200px;
+    }
 }

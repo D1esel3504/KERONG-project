@@ -13,7 +13,7 @@
 
 .search {
   display: flex;
-  justify-content: flex-start;
+  max-width:  300px;
 }
 
 .choosed-board {
@@ -39,4 +39,6 @@
     align-items: center;
     text-align: center;
   }
+
+ 
 };
