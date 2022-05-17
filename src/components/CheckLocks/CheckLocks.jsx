@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './CheckLocks.scss';
 import Lock from '../Lock/Lock';
-import { Modal, Button, Input } from 'antd';
+import { Modal, Button, Input, Alert } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 
 const CheckLocks = () => {
@@ -37,9 +37,16 @@ const CheckLocks = () => {
 
             }
         } catch (error) {
-            console.error('error-' + error);
+            <Alert
+                message="Error"
+                description={error}
+                type="error"
+                showIcon
+            />
         }
     };
+
+
 
     return (
         <div className='block'>

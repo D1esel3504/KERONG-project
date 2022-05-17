@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import './Lock.scss';
-import { Button, Input, Typography, Tooltip } from 'antd';
+import { Button, Input, Typography, Tooltip, Alert } from 'antd';
 import { UnlockFilled, EditFilled, SaveFilled, CloseCircleFilled } from '@ant-design/icons';
 
 const Lock = ({ lock, setLock }) => {
@@ -16,7 +16,6 @@ const Lock = ({ lock, setLock }) => {
         ...lock,
         comment: commentInputComponent,
     };
-
 
     // let requestForLockonServer = (lockNumber, data) => {
     //     return fetch(`https://tms-js-pro-back-end.herokuapp.com/api/meet-rooms/${lockNumber}`,
@@ -40,7 +39,12 @@ const Lock = ({ lock, setLock }) => {
     //         setLock(json);
 
     //     } catch (error) {
-    //         console.error('error-' + error);
+    //         <Alert
+    //         message="Error"
+    //         description={error}
+    //         type="error"
+    //         showIcon
+    //     />
     //     };
     // };
 
@@ -56,10 +60,14 @@ const Lock = ({ lock, setLock }) => {
     //         setisShowEditInput(false);
 
     //     } catch (error) {
-    //         console.error('error-' + error);
+    //         <Alert
+    //         message="Error"
+    //         description={error}
+    //         type="error"
+    //         showIcon
+    //     />
     //     };
     // };
-
 
     let changeCommentInLocalState = () => {
         setLock(dataForChangeComment);
