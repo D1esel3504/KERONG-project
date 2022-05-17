@@ -1,24 +1,39 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import './CheckLocks.scss';
 import Lock from '../Lock/Lock';
-import { Button, Input } from 'antd';
+import { Modal, Button, Input } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 
 const CheckLocks = () => {
     let [lock, setLock] = useState(null);
-    let lockInput = useRef();
+    let [isModalVisible, setIsModalVisible] = useState(false);
+    let [lockInput, setLockInput] = useState('');
+
+    let showModal = () => {
+        setIsModalVisible(true);
+    };
+
+    let handleOk = () => {
+        setIsModalVisible(false);
+    };
+
+    let handleCancel = () => {
+        setIsModalVisible(false);
+    };
 
     let checkLockOnServer = (lockNumber) => fetch(`https://tms-js-pro-back-end.herokuapp.com/api/meet-rooms/${lockNumber}`);
 
     let searchLock = async () => {
         try {
-            if (lockInput.current.value !== '') {
-                let result = await checkLockOnServer(lockInput.current.value);
+            if (lockInput !== '') {
+                let result = await checkLockOnServer(lockInput);
                 let json = await result.json();
 
                 setLock(json);
 
-                lockInput.current.value = '';
+                showModal();
+
+                lockInput = '';
 
             }
         } catch (error) {
@@ -31,7 +46,7 @@ const CheckLocks = () => {
             <strong>CHECK LOCK</strong>
             <div className='search'>
                 <Input
-                    ref={lockInput}
+                    onChange={(e) => setLockInput(e.target.value)}
                     placeholder='ENTER THE NUMBER'
                     allowClear
                 />
@@ -46,12 +61,16 @@ const CheckLocks = () => {
                     Search
                 </Button>
             </div>
-            <Lock
-                lock={lock}
-                setLock={setLock}
-            />
+            <Modal title={`LOCK - ${lockInput}`} visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+                <Lock
+                    lock={lock}
+                    setLock={setLock}
+                />
+            </Modal>
         </div>
     );
 };
 
 export default CheckLocks;
+
+
