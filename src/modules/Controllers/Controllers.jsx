@@ -33,10 +33,10 @@ const Controllers = () => {
 
   return (
     <div>
-      <div className='info'>
+      <div className='info-controller'>
         <Typography.Title level={1}>CONTROLLERS:</Typography.Title>
-        <div className='controllers'>
-          <Table columns={columns} dataSource={controllersList} bordered/>
+        <div>
+          <Table columns={columns} pagination={false} dataSource={controllersList} bordered />
         </div>
       </div>
     </div>

@@ -1,22 +1,14 @@
-.info {
+.info-controller {
   display: flex;
   flex-direction: column;
-}
-
-.controllers {
-  display: flex;
-  justify-content: center;
+  padding: 0 50px;
 }
 
 
 @media screen and (max-width: 1080px) {
-  .info {
+  .info-controller {
     margin: 20px 0 0 0;
     align-items: center;
   }
 
-  .controllers {
-    display: flex;
-    flex-direction: column;
-  }
 };
