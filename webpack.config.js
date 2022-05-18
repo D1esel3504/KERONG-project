@@ -12,12 +12,12 @@ module.exports = {
     mode: 'development',
 
     devServer: {
-        port: 9000,
+        port: 3000,
         hot: true,
         static: {
-          directory: path.join(__dirname, './public'),
+            directory: path.join(__dirname, './public'),
         },
-      },
+    },
 
     output: {
         path: path.resolve(__dirname, './public'),
@@ -26,9 +26,8 @@ module.exports = {
 
     plugins: [
         new HtmlWebpackPlugin({
-            title: 'webpack Boilerplate',
-            template: path.resolve(__dirname, './public/index.html'),
-            filename: 'index.html',
+            template: ('./public/index.html'),
+            inject: 'body'
         }),
 
         new CleanWebpackPlugin(),
@@ -42,8 +41,8 @@ module.exports = {
                 test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
                 use: {
-                    loader : 'babel-loader',
-                } 
+                    loader: 'babel-loader',
+                }
             },
 
             {
