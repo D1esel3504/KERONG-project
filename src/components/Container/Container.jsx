@@ -3,185 +3,12 @@ import { useLocation } from 'react-router-dom';
 import CheckLocks from '../../components/CheckLocks';
 import { Context } from '../../context';
 import logo from '../../image/logo.jpg'
+import { MOCKED_CONTROLLERS } from '../../mockedData';
 import './Container.scss';
 
 const Container = ({ children }) => {
   let [controllersList, setControllersList] = useState([]);
   let location = useLocation();
-  const MOCKED_CONTROLLERS = [
-    {
-      number: 1,
-      ip: '10.3.2.5',
-      boards: [
-        {
-          number: 1,
-          locks: {
-            '0:00:99': {
-              state: 'closed',
-              comment: '',
-            },
-            '0:00:66': {
-              state: 'closed',
-              comment: '',
-            },
-            '0:00:77': {
-              state: 'closed',
-              comment: '',
-            },
-          }
-        },
-        {
-          number: 23,
-          locks: {
-            '0:00:99': {
-              state: 'closed',
-              comment: '',
-            },
-            '0:00:66': {
-              state: 'closed',
-              comment: '',
-            },
-            '0:00:77': {
-              state: 'closed',
-              comment: '',
-            },
-          }
-        },
-        {
-          number: 2343454,
-          locks: {
-            '0:00:99': {
-              state: 'closed',
-              comment: '',
-            },
-            '0:00:66': {
-              state: 'closed',
-              comment: '',
-            },
-            '0:00:77': {
-              state: 'closed',
-              comment: '',
-            },
-          }
-        },
-      ],
-    },
-    {
-      number: 2,
-      ip: '10.3.2.6',
-      boards: [
-        {
-          number: 1,
-          locks: {
-            '0:00:99': {
-              state: 'closed',
-              comment: '',
-            },
-            '0:00:66': {
-              state: 'closed',
-              comment: '',
-            },
-            '0:00:77': {
-              state: 'closed',
-              comment: '',
-            },
-          }
-        },
-        {
-          number: 2,
-          locks: {
-            '0:00:99': {
-              state: 'closed',
-              comment: '',
-            },
-            '0:00:66': {
-              state: 'closed',
-              comment: '',
-            },
-            '0:00:77': {
-              state: 'closed',
-              comment: '',
-            },
-          }
-        },
-        {
-          number: 3,
-          locks: {
-            '0:00:99': {
-              state: 'closed',
-              comment: '',
-            },
-            '0:00:66': {
-              state: 'closed',
-              comment: '',
-            },
-            '0:00:77': {
-              state: 'closed',
-              comment: '',
-            },
-          }
-        },
-      ],
-    },
-    {
-      number: 3,
-      ip: '10.3.2.7',
-      boards: [
-        {
-          number: 1,
-          locks: {
-            '0:00:99': {
-              state: 'closed',
-              comment: '',
-            },
-            '0:00:66': {
-              state: 'closed',
-              comment: '',
-            },
-            '0:00:77': {
-              state: 'closed',
-              comment: '',
-            },
-          }
-        },
-        {
-          number: 2,
-          locks: {
-            '0:00:99': {
-              state: 'closed',
-              comment: '',
-            },
-            '0:00:66': {
-              state: 'closed',
-              comment: '',
-            },
-            '0:00:77': {
-              state: 'closed',
-              comment: '',
-            },
-          }
-        },
-        {
-          number: 3,
-          locks: {
-            '0:00:99': {
-              state: 'closed',
-              comment: '',
-            },
-            '0:00:66': {
-              state: 'closed',
-              comment: '',
-            },
-            '0:00:77': {
-              state: 'closed',
-              comment: '',
-            },
-          },
-        }
-      ],
-    },
-  ];
-
 
   let getControllers = async () => {
     let controllers = await Promise.resolve(MOCKED_CONTROLLERS);
@@ -189,8 +16,28 @@ const Container = ({ children }) => {
     setControllersList(controllers)
   }
 
+  let updateLockInContext = (index, lockNumber, data) => {
+    let updatedArr = [...controllersList];
 
-    // let getAllControllersfromApi = () => fetch('https://tms-js-pro-back-end.herokuapp.com/api/meet-rooms/');
+    updatedArr.reduce((acc, curr) => {
+      return [...acc, ...curr.boards.splice(index, 1, {
+        ...curr.boards[index],
+        locks: {
+          ...curr.boards[index].locks,
+          [lockNumber]: {
+            ...data
+          },
+        },
+      })]
+    }, [])
+
+    console.log(updatedArr);
+
+    setControllersList(updatedArr)
+
+  }
+
+  // let getAllControllersfromApi = () => fetch('https://tms-js-pro-back-end.herokuapp.com/api/meet-rooms/');
 
   // useEffect(() => {
   //   let getAllControllers = async () => {
@@ -211,7 +58,7 @@ const Container = ({ children }) => {
   // }, []);
 
   return (
-    <Context.Provider value={{controllersList, getControllers}}>
+    <Context.Provider value={{ controllersList, getControllers, updateLockInContext }}>
       <div className='container'>
         <div className='header'>
           <img className='header__logo' alt='logo' src={logo} />

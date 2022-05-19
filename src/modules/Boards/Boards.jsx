@@ -11,7 +11,7 @@ const Boards = () => {
   let [temp, setTemp] = useState([])
   let [boardInput, setBoardInput] = useState('')
   let { id } = useParams()
-  let { controllersList } = useContext(Context)
+  let { controllersList, updateLockInContext} = useContext(Context)
 
   useEffect(() => {
     let controller = controllersList.filter((i) => i.ip === id)
@@ -33,27 +33,6 @@ const Boards = () => {
     )
 
     setTemp(filtredBoard)
-  }
-
-  let setLastModifications = (index, lockNumber, data) => {
-    let changedArr = [...temp];
-
-    let changedLock = {
-      ...changedArr[index].locks[lockNumber],
-      ...data
-    }
-
-    changedArr.splice(index, 1, {
-      ...changedArr[index],
-      locks: {
-        ...changedArr[index].locks,
-        [lockNumber]: {
-          ...changedLock
-        },
-      },
-    })
-
-    setTemp(changedArr);
   }
 
   return (
@@ -95,7 +74,7 @@ const Boards = () => {
                       ...board.locks[lock],
                     }}
                     index={index}
-                    setLock={setLastModifications}
+                    setLock={updateLockInContext}
                   />
                 ))}
               </div>
