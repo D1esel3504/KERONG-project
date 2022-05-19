@@ -9,8 +9,8 @@ import {
 } from '@ant-design/icons'
 
 const Lock = ({ lock, setLock, index }) => {
-    let [commentInputComponent, setCommentInputComponent] = useState('')
-    let [isShowEditInput, setisShowEditInput] = useState(false)
+    let [commentInputComponent, setCommentInputComponent] = useState('');
+    let [isShowEditInput, setisShowEditInput] = useState(false);
 
     // let requestForLockonServer = (lockNumber, data) => {
     //     return fetch(`https://tms-js-pro-back-end.herokuapp.com/api/meet-rooms/${lockNumber}`,
@@ -55,8 +55,8 @@ const Lock = ({ lock, setLock, index }) => {
     // };
 
     let changeLockInLocalState = (index, lockNumber, data) => {
-        setLock(index, lockNumber, data)
-        setisShowEditInput(false)
+        setLock(index, lockNumber, data);
+        setisShowEditInput(false);
     }
 
     return (

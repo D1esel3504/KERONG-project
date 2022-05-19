@@ -7,32 +7,30 @@ import { SearchOutlined } from '@ant-design/icons'
 import './Boards.scss'
 
 const Boards = () => {
-  let [boardList, setBoardList] = useState([])
-  let [temp, setTemp] = useState([])
-  let [boardInput, setBoardInput] = useState('')
-  let { id } = useParams()
-  let { controllersList, updateLockInContext} = useContext(Context)
+  let [boardList, setBoardList] = useState([]);
+  let [temp, setTemp] = useState([]);
+  let [boardInput, setBoardInput] = useState('');
+  let { id } = useParams();
+  let { controllersList, updateLockInContext } = useContext(Context);
 
   useEffect(() => {
-    let controller = controllersList.filter((i) => i.ip === id)
+    let controller = controllersList.filter((i) => i.ip === id);
 
     let boards = controller.reduce((acc, curr) => {
       return [...acc, ...curr.boards]
-    }, [])
+    }, []);
 
-    setBoardList(boards)
+    setBoardList(boards);
 
-    setTemp(boards)
-  }, [])
+    setTemp(boards);
+  }, [controllersList]);
 
   let filterBoards = (numberBoard) => {
-    let tempBoards = [...boardList]
+    let tempBoards = [...boardList];
 
-    let filtredBoard = tempBoards.filter((i) =>
-      i.number.toString().includes(numberBoard),
-    )
+    let filtredBoard = tempBoards.filter((i) => i.number.toString().includes(numberBoard));
 
-    setTemp(filtredBoard)
+    setTemp(filtredBoard);
   }
 
   return (
@@ -86,4 +84,4 @@ const Boards = () => {
   )
 }
 
-export default Boards
+export default Boards;
