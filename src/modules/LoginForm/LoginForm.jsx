@@ -18,22 +18,25 @@ const LoginForm = () => {
     password: userPassword,
   }
 
-  let handleLogIn = () => {
-
+  let handleLogIn = async () => {
     try {
-      fetch('https://tms-js-pro-back-end.herokuapp.com/api/users/signin', {
+      let response = await fetch('https://tms-js-pro-back-end.herokuapp.com/api/users/signin', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(userData),
-      }).then((response) => {
-        if (response.status === 200) {
-          history('/')
-        }
       })
+
+      if (response.status === 200) {
+        history('/')
+      } else {
+        setIsShowAlert(true);
+        console.log(response);
+      }
     } catch (error) {
-      setIsShowAlert(true);
+      setIsShowAlert(true)
+      console.log('dsdsd', error);
     }
   }
 
@@ -77,13 +80,13 @@ const LoginForm = () => {
         </Form.Item>
       </Form>
       {isShowAlert &&
-          <Alert
-            message="Error"
-            description="Check your email and password"
-            type="error"
-            showIcon
-            closable
-          />}
+        <Alert
+          message="Error"
+          description="Check your email and password"
+          type="error"
+          showIcon
+          closable
+        />}
     </div>
   );
 };
