@@ -18,14 +18,16 @@ const Boards = () => {
 
     setBoardList(boards)
 
-    setTemp(boards)
+     if (temp.length !== 1) {
+      setTemp(boards)
+     } 
 
   }, [controllersList])
 
   let filterBoards = (numberBoard) => {
     let tempBoards = [...boardList]
 
-    let filtredBoard = tempBoards.filter((i) =>i.number.toString().includes(numberBoard))
+    let filtredBoard = tempBoards.filter((i) => i.number.toString().includes(numberBoard))
 
     setTemp(filtredBoard)
   }
