@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import CheckLocks from '../../components/CheckLocks';
 import { Context } from '../../context';
-import logo from '../../image/logo.jpg'
+import logo from '../../image/logo.jpg';
 import { MOCKED_CONTROLLERS } from '../../mockedData';
 import './Container.scss';
 
@@ -11,30 +11,22 @@ const Container = ({ children }) => {
   let location = useLocation();
 
   let getControllers = async () => {
-    let controllers = await Promise.resolve(MOCKED_CONTROLLERS);
+    let controllers = await Promise.resolve(MOCKED_CONTROLLERS)
 
     setControllersList(controllers)
   }
 
-  let updateLockInContext = (index, lockNumber, data) => {
-    let updatedArr = [...controllersList];
+  let updateLockInContext = (lockNumber, data, ip, boardNumber) => {
+    const updatedControllersList = [...controllersList];
 
-    updatedArr.reduce((acc, curr) => {
-      return [...acc, ...curr.boards.splice(index, 1, {
-        ...curr.boards[index],
-        locks: {
-          ...curr.boards[index].locks,
-          [lockNumber]: {
-            ...data
-          },
-        },
-      })]
-    }, [])
+    const cntrlIndex = updatedControllersList.findIndex(cntrl => cntrl.ip === ip);
 
-    console.log(updatedArr);
+    const boardIndex = updatedControllersList[cntrlIndex].boards.findIndex(
+      el => el.number === boardNumber,
+    )
+    updatedControllersList[cntrlIndex].boards[boardIndex].locks[lockNumber] = data;
 
-    setControllersList(updatedArr)
-
+    setControllersList(updatedControllersList)
   }
 
   // let getAllControllersfromApi = () => fetch('https://tms-js-pro-back-end.herokuapp.com/api/meet-rooms/');
@@ -58,16 +50,18 @@ const Container = ({ children }) => {
   // }, []);
 
   return (
-    <Context.Provider value={{ controllersList, getControllers, updateLockInContext }}>
-      <div className='container'>
-        <div className='header'>
-          <img className='header__logo' alt='logo' src={logo} />
+    <Context.Provider
+      value={{ controllersList, getControllers, updateLockInContext }}
+    >
+      <div className="container">
+        <div className="header">
+          <img className="header__logo" alt="logo" src={logo} />
           {location.pathname !== '/login' && <CheckLocks />}
         </div>
         <div>{children}</div>
       </div>
     </Context.Provider>
-  );
-};
+  )
+}
 
-export default Container;
+export default Container

@@ -14,23 +14,20 @@ const Boards = () => {
   let { controllersList, updateLockInContext } = useContext(Context);
 
   useEffect(() => {
-    let controller = controllersList.filter((i) => i.ip === id);
+    let boards = controllersList.find((i) => i.ip === id).boards;
 
-    let boards = controller.reduce((acc, curr) => {
-      return [...acc, ...curr.boards]
-    }, []);
+    setBoardList(boards)
 
-    setBoardList(boards);
+    setTemp(boards)
 
-    setTemp(boards);
-  }, [controllersList]);
+  }, [controllersList])
 
   let filterBoards = (numberBoard) => {
-    let tempBoards = [...boardList];
+    let tempBoards = [...boardList]
 
-    let filtredBoard = tempBoards.filter((i) => i.number.toString().includes(numberBoard));
+    let filtredBoard = tempBoards.filter((i) =>i.number.toString().includes(numberBoard))
 
-    setTemp(filtredBoard);
+    setTemp(filtredBoard)
   }
 
   return (
@@ -57,7 +54,7 @@ const Boards = () => {
         </div>
         <div className="boards">
           {temp.length
-            ? temp.map((board, index) => (
+            ? temp.map((board) => (
               <div>
                 <span
                   onClick={() => filterBoards(board.number)}
@@ -71,7 +68,8 @@ const Boards = () => {
                       lockNumber: lock,
                       ...board.locks[lock],
                     }}
-                    index={index}
+                    boardNumber={board.number}
+                    id={id}
                     setLock={updateLockInContext}
                   />
                 ))}
@@ -84,4 +82,4 @@ const Boards = () => {
   )
 }
 
-export default Boards;
+export default Boards

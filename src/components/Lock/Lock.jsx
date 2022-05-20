@@ -8,9 +8,9 @@ import {
     CloseCircleFilled,
 } from '@ant-design/icons'
 
-const Lock = ({ lock, setLock, index }) => {
-    let [commentInputComponent, setCommentInputComponent] = useState('');
-    let [isShowEditInput, setisShowEditInput] = useState(false);
+const Lock = ({ lock, setLock, id, boardNumber }) => {
+    let [commentInputComponent, setCommentInputComponent] = useState('')
+    let [isShowEditInput, setisShowEditInput] = useState(false)
 
     // let requestForLockonServer = (lockNumber, data) => {
     //     return fetch(`https://tms-js-pro-back-end.herokuapp.com/api/meet-rooms/${lockNumber}`,
@@ -54,9 +54,9 @@ const Lock = ({ lock, setLock, index }) => {
     //     };
     // };
 
-    let changeLockInLocalState = (index, lockNumber, data) => {
-        setLock(index, lockNumber, data);
-        setisShowEditInput(false);
+    let changeLockInLocalState = (lockNumber, data, id, boardNumber) => {
+        setLock(lockNumber, data, id, boardNumber)
+        setisShowEditInput(false)
     }
 
     return (
@@ -80,10 +80,16 @@ const Lock = ({ lock, setLock, index }) => {
                                         size="large"
                                         type="primary"
                                         onClick={() =>
-                                            changeLockInLocalState(index, lock.lockNumber, {
-                                                ...lock,
-                                                comment: commentInputComponent,
-                                            })}
+                                            changeLockInLocalState(
+                                                lock.lockNumber,
+                                                {
+                                                    ...lock,
+                                                    comment: commentInputComponent,
+                                                },
+                                                id,
+                                                boardNumber
+                                            )
+                                        }
                                         icon={<SaveFilled />}
                                         danger
                                     ></Button>
@@ -104,7 +110,9 @@ const Lock = ({ lock, setLock, index }) => {
                         </div>
                     ) : (
                         <div className="lock-description">
-                            <span className="lock-description__comment"> COMMENT - {lock.comment || 'empty'}</span>
+                            <span className="lock-description__comment">
+                                COMMENT - {lock.comment || 'empty'}
+                            </span>
                             <Tooltip title="edit comment">
                                 <Button
                                     type="primary"
@@ -124,10 +132,15 @@ const Lock = ({ lock, setLock, index }) => {
                                 size="large"
                                 icon={<UnlockFilled />}
                                 onClick={() =>
-                                    changeLockInLocalState(index, lock.lockNumber, {
-                                        ...lock,
-                                        state: lock.state === 'closed' ? 'opened' : 'closed',
-                                    })
+                                    changeLockInLocalState(
+                                        lock.lockNumber,
+                                        {
+                                            ...lock,
+                                            state: lock.state === 'closed' ? 'opened' : 'closed',
+                                        },
+                                        id,
+                                        boardNumber
+                                    )
                                 }
                                 danger
                             ></Button>
