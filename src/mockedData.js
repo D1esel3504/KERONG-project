@@ -54,6 +54,41 @@ export const MOCKED_CONTROLLERS = [
             },
           }
         },
+        {
+          number: 115,
+          locks: {
+            '0:00:99': {
+              state: 'closed',
+              comment: '',
+            },
+            '0:00:66': {
+              state: 'closed',
+              comment: '',
+            },
+            '0:00:77': {
+              state: 'closed',
+              comment: '',
+            },
+          }
+        },
+        {
+          number: 117,
+          locks: {
+            '0:00:99': {
+              state: 'closed',
+              comment: '',
+            },
+            '0:00:66': {
+              state: 'closed',
+              comment: '',
+            },
+            '0:00:77': {
+              state: 'closed',
+              comment: '',
+            },
+          }
+        },
+        
       ],
     },
     {

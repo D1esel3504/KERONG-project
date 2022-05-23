@@ -18,9 +18,9 @@ const Boards = () => {
 
     setBoardList(boards)
 
-     if (temp.length !== 1) {
+    if (temp.length === 0) {
       setTemp(boards)
-     } 
+    }
 
   }, [controllersList])
 
