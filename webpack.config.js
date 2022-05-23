@@ -3,17 +3,43 @@ const webpack = require('webpack');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const TerserWebpackPlugin = require('terser-webpack-plugin');
+const OptimizeCssAssetPlugin = require('optimize-css-assets-webpack-plugin');
+const ESLintPlugin = require('eslint-webpack-plugin');
+const PrettierPlugin = require('prettier-webpack-plugin');
+
+let isDev = process.env.NODE_ENV === 'development';
+let isProd = !isDev;
+
+let optimization = () => {
+    const config = {
+        splitChunks: {
+            chunks: 'all',
+        }
+    }
+
+    if (isProd) {
+        config.minimizer = [
+            new OptimizeCssAssetPlugin(),
+            new TerserWebpackPlugin()
+        ]
+    }
+    return config
+}
+
+
 
 module.exports = {
     entry: {
         main: path.resolve(__dirname, './src/index.js'),
     },
 
-    mode: 'development',
+    optimization: optimization(),
 
     devServer: {
         port: 3000,
-        hot: true,
+        hot: isDev,
         static: {
             directory: path.join(__dirname, './public'),
         },
@@ -21,7 +47,7 @@ module.exports = {
 
     output: {
         path: path.resolve(__dirname, './dist'),
-        filename: 'bundle.js',
+        filename: '[name].[contenthash].js',
     },
 
     stats: {
@@ -31,12 +57,38 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             template: ('./public/index.html'),
-            inject: 'body'
+            minify: {
+                collapseWhitespace: isProd
+            }
         }),
 
         new CleanWebpackPlugin(),
 
         new webpack.HotModuleReplacementPlugin(),
+
+        new MiniCssExtractPlugin({
+            filename: '[name].[contenthash].css',
+        }),
+
+        new ESLintPlugin({
+            outputReport: {
+                formatter: "HTML",
+                filePath: './eslint_report.html',
+            },
+            extensions: ['js', 'jsx'],
+            eslintPath: require.resolve('eslint'),
+        }),
+
+        new PrettierPlugin({
+            printWidth: 80,
+            tabWidth: 2,
+            commas: 'all',
+            useTabs: false,
+            semi: true,
+            encoding: 'utf-8',
+            extensions: [".js", ".jsx", 'css', 'scss']
+        })
+
     ],
 
     module: {
@@ -44,9 +96,7 @@ module.exports = {
             {
                 test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
-                use: {
-                    loader: 'babel-loader',
-                }
+                use: ['babel-loader']
             },
 
             {
@@ -56,7 +106,7 @@ module.exports = {
 
             {
                 test: /\.(scss|css)$/,
-                use: ['style-loader', 'css-loader', 'sass-loader'],
+                use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
             },
         ],
     },
