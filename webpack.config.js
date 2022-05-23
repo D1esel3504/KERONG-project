@@ -20,8 +20,12 @@ module.exports = {
     },
 
     output: {
-        path: path.resolve(__dirname, './public'),
+        path: path.resolve(__dirname, './dist'),
         filename: 'bundle.js',
+    },
+
+    stats: {
+        children: true,
     },
 
     plugins: [
@@ -55,5 +59,9 @@ module.exports = {
                 use: ['style-loader', 'css-loader', 'sass-loader'],
             },
         ],
-    }
+    },
+
+    resolve: {
+        extensions: ['.js', '.jsx', '.css'],
+    },
 }
