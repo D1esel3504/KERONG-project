@@ -1,69 +1,88 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import "./Boards.scss";
+import React, { useContext, useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import Lock from '../../components/Lock/Lock'
+import { Context } from '../../context'
+import { Button, Input, Typography } from 'antd'
+import { SearchOutlined } from '@ant-design/icons'
+import './Boards.scss'
+
 
 const Boards = () => {
-  let [boards, setBoard] = useState([]);
+  let [boardList, setBoardList] = useState([]);
+  let [temp, setTemp] = useState([]);
+  let [boardInput, setBoardInput] = useState('');
   let { id } = useParams();
-
-  let getBoardfromApi = () =>
-    fetch("https://tms-js-pro-back-end.herokuapp.com/api/meet-rooms/");
+  let { controllersList, updateLockInContext } = useContext(Context);
 
   useEffect(() => {
-    let getAllControllers = async () => {
-      try {
-        let getBoard = await getBoardfromApi();
-        let result = await getBoard.json();
+    let boards = controllersList.find((i) => i.ip === id).boards;
 
-        setBoard(result);
-      } catch (error) {
-        console.error("error-" + error);
-      }
-    };
+    setBoardList(boards)
 
-    getAllControllers();
-  }, []);
+    if (temp.length === 0) {
+      setTemp(boards)
+    }
 
-  let filterBoards = (id) => {
-    let oneBoard = boards.filter((i) => i.id === id);
+  }, [controllersList])
 
-    setBoard(oneBoard);
-  };
+  let filterBoards = (numberBoard) => {
+    let tempBoards = [...boardList]
 
-  console.log(boards);
+    let filtredBoard = tempBoards.filter((i) => i.number.toString().includes(numberBoard))
+
+    setTemp(filtredBoard)
+  }
 
   return (
     <div>
       <div className="info">
-        <h1>BOARDS:</h1>
+        <Typography.Title level={1}>BOARDS:</Typography.Title>
+        <div className="search">
+          <Input
+            placeholder="THE NUMBER OF BOARD"
+            allowClear
+            onChange={(e) => setBoardInput(e.target.value)}
+          />
+          <Button
+            style={{
+              marginLeft: '10px',
+            }}
+            danger
+            type="primary"
+            onClick={() => filterBoards(boardInput)}
+            icon={<SearchOutlined />}
+          >
+            Search
+          </Button>
+        </div>
         <div className="boards">
-          {boards.length
-            ? boards.map((i) => (
-                <div>
-                  <span
-                    className="choosed-board"
-                    onClick={() => filterBoards(i.id)}
-                  >
-                    BOARD - {i.floor}
-                  </span>
-                  <div>
-                    <span> NUMBER - {i.floor}</span>
-                    <div>
-                      <span>COMMENT - {i.description}</span>
-                      <button>EDIT COMMENT</button>
-                    </div>
-                    <div>
-                      <span> STATUS - CLOSED</span>
-                      <button>OPEN LOCK</button>
-                    </div>
-                  </div>
-                </div>
-              ))
-            : "NO BOARDS AND LOCKS"}
+          {temp.length
+            ? temp.map((board) => (
+              <div>
+                <span
+                  onClick={() => filterBoards(board.number)}
+                  className="choosed-board"
+                >
+                  BOARD - {board.number}
+                </span>
+                {Object.keys(board.locks).map((lock) => (
+                  <Lock
+                    lock={{
+                      lockNumber: lock,
+                      ...board.locks[lock],
+                    }}
+                    boardNumber={board.number}
+                    id={id}
+                    setLock={updateLockInContext}
+                  />
+                ))}
+              </div>
+            ))
+            : 'NO BOARDS AND LOCKS'}
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Boards;
+export default Boards

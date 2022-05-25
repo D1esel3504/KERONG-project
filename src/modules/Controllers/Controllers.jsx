@@ -1,49 +1,48 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import "./Controllers.scss";
+import React, { useEffect, useContext } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import './Controllers.scss';
+import { Context } from '../../context';
+import { Button, Typography, Table } from 'antd';
+
 
 const Controllers = () => {
-  let [controllers, SetControllers] = useState([]);
   let navigate = useNavigate();
   let { id } = useParams();
-
-  let getAllControllersfromApi = () =>
-    fetch("https://tms-js-pro-back-end.herokuapp.com/api/meet-rooms/");
+  let { controllersList, getControllers } = useContext(Context);
 
   useEffect(() => {
-    let getAllControllers = async () => {
-      try {
-        let getControllers = await getAllControllersfromApi();
-        let result = await getControllers.json();
+    getControllers();
+  }, [])
 
-        SetControllers(result);
-      } catch (error) {
-        console.error("error-" + error);
-      }
-    };
+  let columns = [
+    {
+      title: 'Number',
+      dataIndex: 'number',
+    },
+    {
+      title: 'IP',
+      dataIndex: 'ip',
+    },
+    {
+      title: 'Boards',
+      render: ((boards) => <Button type="primary" danger onClick={() => goToBoard(boards.ip)}> GO TO THE BOARDS</Button>)
+    },
+  ]
 
-    getAllControllers();
-  }, []);
-
-  let goToBoard = (id) => navigate(`/boards/${id}`);
+  let goToBoard = (ip) => navigate(`/boards/${ip}`);
 
   return (
     <div>
-      <div className="info">
-        <h1>CONTROLLERS:</h1>
-        <div className="controllers">
-          {controllers &&
-            controllers.map((i) => (
-              <ul className="controllers__info">
-                <li>NUMBER - {i.floor}</li>
-                <li>IP - {i.id}</li>
-                <button onClick={() => goToBoard(i.id)}>GO TO THE BOARD</button>
-              </ul>
-            ))}
+      <div className='info-controller'>
+        <Typography.Title level={1}>CONTROLLERS:</Typography.Title>
+        <div>
+          <Table columns={columns} pagination={false} dataSource={controllersList} bordered />
         </div>
       </div>
     </div>
+
   );
 };
 
 export default Controllers;
+

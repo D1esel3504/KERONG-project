@@ -1,24 +1,14 @@
-.info {
+.info-controller {
   display: flex;
   flex-direction: column;
-  margin: 30px 0 0 100px;
-}
-
-.controllers {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 15px;
+  padding: 0 50px;
 }
 
 
 @media screen and (max-width: 1080px) {
-  .info {
+  .info-controller {
     margin: 20px 0 0 0;
     align-items: center;
   }
 
-  .controllers {
-    display: flex;
-    flex-direction: column;
-  }
 };

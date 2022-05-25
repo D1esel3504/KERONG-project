@@ -1,103 +1,87 @@
-import React, { useRef, useState } from "react";
-import Lock from "../Lock/Lock";
+import React, { useState } from 'react';
+import './CheckLocks.scss';
+import Lock from '../Lock/Lock';
+import { Modal, Button, Input, Alert } from 'antd';
+import { SearchOutlined } from '@ant-design/icons';
 
 const CheckLocks = () => {
-  let [lock, setLock] = useState([]);
-  let [commentInputComponent, setCommentInputComponent] = useState("");
-  let [isShowEditInput, setisShowEditInput] = useState(false);
-  let lockInput = useRef();
+  let [lock, setLock] = useState(null);
+  let [isModalVisible, setIsModalVisible] = useState(false);
+  let [lockInput, setLockInput] = useState('');
+  let [isShowAlert, setIsShowAlert] = useState(false);
 
-  let dataForChangeStatus = {
-    ...lock,
-    floor: 333,
-    // state: opened,
+  let showModal = () => {
+    setIsModalVisible(true);
   };
 
-  let dataForChangeComment = {
-    ...lock,
-    floor: commentInputComponent,
-    // comment: commentInputComponent,
+  let handleOk = () => {
+    setIsModalVisible(false);
   };
 
-  let checkLockOnServer = (lockNumber) =>
-    fetch(
-      `https://tms-js-pro-back-end.herokuapp.com/api/meet-rooms/${lockNumber}`
-    );
+  let handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
+  let checkLockOnServer = (lockNumber) => fetch(`https://tms-js-pro-back-end.herokuapp.com/api/meet-rooms/${lockNumber}`);
 
   let searchLock = async () => {
     try {
-      if (lockInput.current.value !== "") {
-        let result = await checkLockOnServer(lockInput.current.value);
+      if (lockInput !== '') {
+        let result = await checkLockOnServer(lockInput);
         let json = await result.json();
 
         setLock(json);
 
-        lockInput.current.value = "";
+        showModal();
+
+        lockInput = '';
+
       }
     } catch (error) {
-      console.error("error-" + error);
-    }
-  };
-
-  let requestForLockonServer = (lockNumber, data) => {
-    return fetch(
-      `https://tms-js-pro-back-end.herokuapp.com/api/meet-rooms/${lockNumber}`,
-      {
-        method: "PUT",
-        body: JSON.stringify(data),
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImtlbWFsa2FsYW5kYXJvdkBnbWFpbC5jb20iLCJpZCI6IjYxMDJiOWMxMmFhYTkwMGMwZTI2OGFkZSIsImV4cCI6MTY1NzMxNTM1NSwiaWF0IjoxNjUyMTMxMzU1fQ.c62OU82mCuRHxOZDMDyXaKhm3LYXS7kvywUXXfiMH2M`,
-        },
-      }
-    );
-  };
-
-  let openLockOnServer = async () => {
-    try {
-      let result = await requestForLockonServer(lock.id, dataForChangeStatus);
-      let json = await result.json();
-
-      console.log("Success:", JSON.stringify(json));
-
-      setLock(json);
-    } catch (error) {
-      console.error("error-" + error);
-    }
-  };
-
-  let changeCommentOnServer = async () => {
-    try {
-      let result = await requestForLockonServer(lock.id, dataForChangeComment);
-      let json = await result.json();
-
-      console.log("Success:", JSON.stringify(json));
-
-      setLock(json);
-
-      setisShowEditInput(false);
-    } catch (error) {
-      console.error("error-" + error);
+      setIsShowAlert(true);
     }
   };
 
   return (
-    <div>
-      <h4>CHECK LOCK</h4>
-      <div>
-        <input ref={lockInput} type="text" placeholder="ENTER THE NUMBER" />
-        <button onClick={searchLock}>SEARCH</button>
+    <div className='block'>
+      <strong>CHECK LOCK</strong>
+      <div className='search'>
+        <Input
+          onChange={(e) => setLockInput(e.target.value)}
+          placeholder='ENTER THE NUMBER'
+          allowClear
+        />
+        <Button
+          style={{
+            marginLeft: '10px'
+          }}
+          danger
+          type="primary"
+          onClick={searchLock}
+          icon={<SearchOutlined />}>
+          Search
+        </Button>
       </div>
-      <Lock
-        lock={lock}
-        openLockOnServer={openLockOnServer}
-        changeCommentOnServer={changeCommentOnServer}
-        setCommentInputComponent={setCommentInputComponent}
-        isShowEditInput={isShowEditInput}
-        setisShowEditInput={setisShowEditInput}
-      />
+      {isShowAlert &&
+        <Alert
+          message="Error"
+          description="SERVER ERROR"
+          type="error"
+          showIcon
+          closable
+        />}
+      <Modal title={`LOCK - ${lockInput}`} visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+        <Lock
+          lock={lock}
+          setLock={setLock}
+        />
+      </Modal>
     </div>
-  );
+  )
 };
 
 export default CheckLocks;
+
+
+
+
