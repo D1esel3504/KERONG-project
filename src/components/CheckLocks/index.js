@@ -1,1 +1,1 @@
-export { default } from './CheckLocks'
+export { default } from "./CheckLocks";
