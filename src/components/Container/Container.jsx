@@ -1,33 +1,36 @@
-import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import CheckLocks from '../../components/CheckLocks';
-import { Context } from '../../context';
-import logo from '../../image/logo.jpg';
-import { MOCKED_CONTROLLERS } from '../../mockedData';
-import './Container.scss';
+import React, { useState } from "react";
+import { useLocation } from "react-router-dom";
+import CheckLocks from "../../components/CheckLocks";
+import { Context } from "../../context";
+import logo from "../../image/logo.jpg";
+import { MOCKED_CONTROLLERS } from "../../mockedData";
+import "./Container.scss";
 
 const Container = ({ children }) => {
   let [controllersList, setControllersList] = useState([]);
   let location = useLocation();
 
   let getControllers = async () => {
-    let controllers = await Promise.resolve(MOCKED_CONTROLLERS)
+    let controllers = await Promise.resolve(MOCKED_CONTROLLERS);
 
-    setControllersList(controllers)
-  }
+    setControllersList(controllers);
+  };
 
   let updateLockInContext = (lockNumber, data, ip, boardNumber) => {
     const updatedControllersList = [...controllersList];
 
-    const cntrlIndex = updatedControllersList.findIndex(cntrl => cntrl.ip === ip);
+    const cntrlIndex = updatedControllersList.findIndex(
+      (cntrl) => cntrl.ip === ip
+    );
 
     const boardIndex = updatedControllersList[cntrlIndex].boards.findIndex(
-      el => el.number === boardNumber,
-    )
-    updatedControllersList[cntrlIndex].boards[boardIndex].locks[lockNumber] = data;
+      (el) => el.number === boardNumber
+    );
+    updatedControllersList[cntrlIndex].boards[boardIndex].locks[lockNumber] =
+      data;
 
-    setControllersList(updatedControllersList)
-  }
+    setControllersList(updatedControllersList);
+  };
 
   // let getAllControllersfromApi = () => fetch('https://tms-js-pro-back-end.herokuapp.com/api/meet-rooms/');
 
@@ -56,12 +59,12 @@ const Container = ({ children }) => {
       <div className="container">
         <div className="header">
           <img className="header__logo" alt="logo" src={logo} />
-          {location.pathname !== '/login' && <CheckLocks />}
+          {location.pathname !== "/login" && <CheckLocks />}
         </div>
         <div>{children}</div>
       </div>
     </Context.Provider>
-  )
-}
+  );
+};
 
-export default Container
+export default Container;
