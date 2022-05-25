@@ -6,6 +6,7 @@ import { Button, Input, Typography } from 'antd'
 import { SearchOutlined } from '@ant-design/icons'
 import './Boards.scss'
 
+
 const Boards = () => {
   let [boardList, setBoardList] = useState([]);
   let [temp, setTemp] = useState([]);
