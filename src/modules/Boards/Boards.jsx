@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import Lock from '../../components/Lock/Lock';
 import { Context } from '../../context';
 import { Button, Input, Typography } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import './Boards.scss';
+import BoardsItem from '../../components/BoardsItem/BoardsItem';
 
 const Boards = () => {
   let [boardList, setBoardList] = useState([]);
@@ -59,25 +59,12 @@ const Boards = () => {
         <div className="boards">
           {renderedBoardList.length
             ? renderedBoardList.map(board => (
-                <div>
-                  <span
-                    onClick={() => filterBoards(board.number)}
-                    className="choosed-board"
-                  >
-                    BOARD - {board.number}
-                  </span>
-                  {Object.keys(board.locks).map(lock => (
-                    <Lock
-                      lock={{
-                        lockNumber: lock,
-                        ...board.locks[lock],
-                      }}
-                      boardNumber={board.number}
-                      id={id}
-                      setLock={updateLockInContext}
-                    />
-                  ))}
-                </div>
+                <BoardsItem
+                  board={board}
+                  id={id}
+                  filterBoards={filterBoards}
+                  updateLockInContext={updateLockInContext}
+                />
               ))
             : 'NO BOARDS AND LOCKS'}
         </div>
