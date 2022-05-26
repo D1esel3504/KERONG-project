@@ -78,7 +78,6 @@ module.exports = {
             useTabs: false,
             semi: true,
             encoding: 'utf-8',
-            trailingComma: "all",
             singleQuote: true,
             extensions: [".js", ".jsx", 'css', 'scss']
         })

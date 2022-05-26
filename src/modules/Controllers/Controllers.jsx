@@ -15,11 +15,11 @@ const Controllers = () => {
   let columns = [
     {
       title: 'Number',
-      dataIndex: 'number',
+      dataIndex: 'number'
     },
     {
       title: 'IP',
-      dataIndex: 'ip',
+      dataIndex: 'ip'
     },
     {
       title: 'Boards',
@@ -27,8 +27,8 @@ const Controllers = () => {
         <Button type="primary" danger onClick={() => goToBoard(boards.ip)}>
           GO TO THE BOARDS
         </Button>
-      ),
-    },
+      )
+    }
   ];
 
   let goToBoard = ip => navigate(`/boards/${ip}`);

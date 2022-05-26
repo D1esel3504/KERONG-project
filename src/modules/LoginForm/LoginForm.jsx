@@ -15,7 +15,7 @@ const LoginForm = () => {
 
   let userData = {
     email: userEmail,
-    password: userPassword,
+    password: userPassword
   };
 
   let handleLogIn = async () => {
@@ -25,10 +25,10 @@ const LoginForm = () => {
         {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json'
           },
-          body: JSON.stringify(userData),
-        },
+          body: JSON.stringify(userData)
+        }
       );
 
       if (response.status === 200) {

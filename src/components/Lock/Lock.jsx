@@ -5,7 +5,7 @@ import {
   UnlockFilled,
   EditFilled,
   SaveFilled,
-  CloseCircleFilled,
+  CloseCircleFilled
 } from '@ant-design/icons';
 
 const Lock = ({ lock, setLock, id, boardNumber }) => {
@@ -84,10 +84,10 @@ const Lock = ({ lock, setLock, id, boardNumber }) => {
                         lock.lockNumber,
                         {
                           ...lock,
-                          comment: commentInputComponent,
+                          comment: commentInputComponent
                         },
                         id,
-                        boardNumber,
+                        boardNumber
                       )
                     }
                     icon={<SaveFilled />}
@@ -102,7 +102,7 @@ const Lock = ({ lock, setLock, id, boardNumber }) => {
                     icon={<CloseCircleFilled />}
                     danger
                     style={{
-                      marginLeft: '5px',
+                      marginLeft: '5px'
                     }}
                   />
                 </Tooltip>
@@ -136,10 +136,10 @@ const Lock = ({ lock, setLock, id, boardNumber }) => {
                     lock.lockNumber,
                     {
                       ...lock,
-                      state: lock.state === 'closed' ? 'opened' : 'closed',
+                      state: lock.state === 'closed' ? 'opened' : 'closed'
                     },
                     id,
-                    boardNumber,
+                    boardNumber
                   )
                 }
                 danger

@@ -20,11 +20,11 @@ const Container = ({ children }) => {
     const updatedControllersList = [...controllersList];
 
     const controllerIndex = updatedControllersList.findIndex(
-      controller => controller.ip === ip,
+      controller => controller.ip === ip
     );
 
     const boardIndex = updatedControllersList[controllerIndex].boards.findIndex(
-      board => board.number === boardNumber,
+      board => board.number === boardNumber
     );
     updatedControllersList[controllerIndex].boards[boardIndex].locks[
       lockNumber

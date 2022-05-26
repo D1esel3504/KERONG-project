@@ -24,7 +24,7 @@ const CheckLocks = () => {
 
   let checkLockOnServer = lockNumber =>
     fetch(
-      `https://tms-js-pro-back-end.herokuapp.com/api/meet-rooms/${lockNumber}`,
+      `https://tms-js-pro-back-end.herokuapp.com/api/meet-rooms/${lockNumber}`
     );
 
   let searchLock = async () => {
@@ -55,7 +55,7 @@ const CheckLocks = () => {
         />
         <Button
           style={{
-            marginLeft: '10px',
+            marginLeft: '10px'
           }}
           danger
           type="primary"

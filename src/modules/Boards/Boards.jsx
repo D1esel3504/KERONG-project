@@ -28,7 +28,7 @@ const Boards = () => {
     let coppiedBoards = [...boardList];
 
     let filtredBoard = coppiedBoards.filter(board =>
-      board.number.toString().includes(numberBoard),
+      board.number.toString().includes(numberBoard)
     );
 
     setRenderedBoardList(filtredBoard);
@@ -46,7 +46,7 @@ const Boards = () => {
           />
           <Button
             style={{
-              marginLeft: '10px',
+              marginLeft: '10px'
             }}
             danger
             type="primary"
@@ -70,7 +70,7 @@ const Boards = () => {
                     <Lock
                       lock={{
                         lockNumber: lock,
-                        ...board.locks[lock],
+                        ...board.locks[lock]
                       }}
                       boardNumber={board.number}
                       id={id}
