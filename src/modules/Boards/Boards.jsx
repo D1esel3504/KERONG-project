@@ -8,29 +8,30 @@ import './Boards.scss';
 
 const Boards = () => {
   let [boardList, setBoardList] = useState([]);
-  let [temp, setTemp] = useState([]);
+  let [renderedBoardList, setRenderedBoardList] = useState([]);
   let [boardInput, setBoardInput] = useState('');
   let { id } = useParams();
   let { controllersList, updateLockInContext } = useContext(Context);
 
   useEffect(() => {
-    let boards = controllersList.find(i => i.ip === id).boards;
+    let boards = controllersList.find(controller => controller.ip === id)
+      .boards;
 
     setBoardList(boards);
 
-    if (temp.length === 0) {
-      setTemp(boards);
+    if (renderedBoardList.length === 0) {
+      setRenderedBoardList(boards);
     }
   }, [controllersList]);
 
   let filterBoards = numberBoard => {
-    let tempBoards = [...boardList];
+    let coppiedBoards = [...boardList];
 
-    let filtredBoard = tempBoards.filter(i =>
-      i.number.toString().includes(numberBoard),
+    let filtredBoard = coppiedBoards.filter(board =>
+      board.number.toString().includes(numberBoard),
     );
 
-    setTemp(filtredBoard);
+    setRenderedBoardList(filtredBoard);
   };
 
   return (
@@ -56,8 +57,8 @@ const Boards = () => {
           </Button>
         </div>
         <div className="boards">
-          {temp.length
-            ? temp.map(board => (
+          {renderedBoardList.length
+            ? renderedBoardList.map(board => (
                 <div>
                   <span
                     onClick={() => filterBoards(board.number)}

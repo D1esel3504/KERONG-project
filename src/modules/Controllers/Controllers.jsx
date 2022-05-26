@@ -6,7 +6,6 @@ import { Button, Typography, Table } from 'antd';
 
 const Controllers = () => {
   let navigate = useNavigate();
-  let { id } = useParams();
   let { controllersList, getControllers } = useContext(Context);
 
   useEffect(() => {
@@ -26,7 +25,6 @@ const Controllers = () => {
       title: 'Boards',
       render: boards => (
         <Button type="primary" danger onClick={() => goToBoard(boards.ip)}>
-          {' '}
           GO TO THE BOARDS
         </Button>
       ),

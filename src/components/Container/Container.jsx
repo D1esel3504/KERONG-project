@@ -19,14 +19,14 @@ const Container = ({ children }) => {
   let updateLockInContext = (lockNumber, data, ip, boardNumber) => {
     const updatedControllersList = [...controllersList];
 
-    const cntrlIndex = updatedControllersList.findIndex(
-      cntrl => cntrl.ip === ip,
+    const controllerIndex = updatedControllersList.findIndex(
+      controller => controller.ip === ip,
     );
 
-    const boardIndex = updatedControllersList[cntrlIndex].boards.findIndex(
-      el => el.number === boardNumber,
+    const boardIndex = updatedControllersList[controllerIndex].boards.findIndex(
+      board => board.number === boardNumber,
     );
-    updatedControllersList[cntrlIndex].boards[boardIndex].locks[
+    updatedControllersList[controllerIndex].boards[boardIndex].locks[
       lockNumber
     ] = data;
 
@@ -42,7 +42,7 @@ const Container = ({ children }) => {
   //       let getControllers = await getAllControllersfromApi();
   //       let result = await getControllers.json();
 
-  //       SetControllersList(result);
+  //       setControllersList(result);
 
   //     } catch (error) {
   //       console.error('error-' + error);
