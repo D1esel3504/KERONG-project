@@ -70,22 +70,16 @@ module.exports = {
             filename: '[name].[contenthash].css',
         }),
 
-        new ESLintPlugin({
-            outputReport: {
-                formatter: "HTML",
-                filePath: './eslint_report.html',
-            },
-            extensions: ['js', 'jsx'],
-            eslintPath: require.resolve('eslint'),
-        }),
+        new ESLintPlugin(),
 
         new PrettierPlugin({
             printWidth: 80,
             tabWidth: 2,
-            commas: 'all',
             useTabs: false,
             semi: true,
             encoding: 'utf-8',
+            trailingComma: "all",
+            singleQuote: true,
             extensions: [".js", ".jsx", 'css', 'scss']
         })
 

@@ -11,23 +11,27 @@ const Container = ({ children }) => {
   let location = useLocation();
 
   let getControllers = async () => {
-    let controllers = await Promise.resolve(MOCKED_CONTROLLERS)
+    let controllers = await Promise.resolve(MOCKED_CONTROLLERS);
 
-    setControllersList(controllers)
-  }
+    setControllersList(controllers);
+  };
 
   let updateLockInContext = (lockNumber, data, ip, boardNumber) => {
     const updatedControllersList = [...controllersList];
 
-    const cntrlIndex = updatedControllersList.findIndex(cntrl => cntrl.ip === ip);
+    const cntrlIndex = updatedControllersList.findIndex(
+      cntrl => cntrl.ip === ip,
+    );
 
     const boardIndex = updatedControllersList[cntrlIndex].boards.findIndex(
       el => el.number === boardNumber,
-    )
-    updatedControllersList[cntrlIndex].boards[boardIndex].locks[lockNumber] = data;
+    );
+    updatedControllersList[cntrlIndex].boards[boardIndex].locks[
+      lockNumber
+    ] = data;
 
-    setControllersList(updatedControllersList)
-  }
+    setControllersList(updatedControllersList);
+  };
 
   // let getAllControllersfromApi = () => fetch('https://tms-js-pro-back-end.herokuapp.com/api/meet-rooms/');
 
@@ -61,7 +65,7 @@ const Container = ({ children }) => {
         <div>{children}</div>
       </div>
     </Context.Provider>
-  )
-}
+  );
+};
 
-export default Container
+export default Container;

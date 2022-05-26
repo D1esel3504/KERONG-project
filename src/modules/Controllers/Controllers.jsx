@@ -4,7 +4,6 @@ import './Controllers.scss';
 import { Context } from '../../context';
 import { Button, Typography, Table } from 'antd';
 
-
 const Controllers = () => {
   let navigate = useNavigate();
   let { id } = useParams();
@@ -12,7 +11,7 @@ const Controllers = () => {
 
   useEffect(() => {
     getControllers();
-  }, [])
+  }, []);
 
   let columns = [
     {
@@ -25,24 +24,32 @@ const Controllers = () => {
     },
     {
       title: 'Boards',
-      render: ((boards) => <Button type="primary" danger onClick={() => goToBoard(boards.ip)}> GO TO THE BOARDS</Button>)
+      render: boards => (
+        <Button type="primary" danger onClick={() => goToBoard(boards.ip)}>
+          {' '}
+          GO TO THE BOARDS
+        </Button>
+      ),
     },
-  ]
+  ];
 
-  let goToBoard = (ip) => navigate(`/boards/${ip}`);
+  let goToBoard = ip => navigate(`/boards/${ip}`);
 
   return (
     <div>
-      <div className='info-controller'>
+      <div className="info-controller">
         <Typography.Title level={1}>CONTROLLERS:</Typography.Title>
         <div>
-          <Table columns={columns} pagination={false} dataSource={controllersList} bordered />
+          <Table
+            columns={columns}
+            pagination={false}
+            dataSource={controllersList}
+            bordered
+          />
         </div>
       </div>
     </div>
-
   );
 };
 
 export default Controllers;
-

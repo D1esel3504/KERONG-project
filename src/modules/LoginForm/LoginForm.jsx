@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Form, Input, Button, Checkbox, Alert } from 'antd';
 import 'antd/dist/antd.css';
@@ -16,32 +16,35 @@ const LoginForm = () => {
   let userData = {
     email: userEmail,
     password: userPassword,
-  }
+  };
 
   let handleLogIn = async () => {
     try {
-      let response = await fetch('https://tms-js-pro-back-end.herokuapp.com/api/users/signin', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+      let response = await fetch(
+        'https://tms-js-pro-back-end.herokuapp.com/api/users/signin',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(userData),
         },
-        body: JSON.stringify(userData),
-      })
+      );
 
       if (response.status === 200) {
-        history('/')
+        history('/');
       } else {
         setIsShowAlert(true);
         console.log(response);
       }
     } catch (error) {
-      setIsShowAlert(true)
+      setIsShowAlert(true);
       console.log('dsdsd', error);
     }
-  }
+  };
 
   return (
-    <div className='form'>
+    <div className="form">
       <Form
         name="basic"
         labelCol={{ span: 8 }}
@@ -55,7 +58,7 @@ const LoginForm = () => {
           name="email"
           rules={[{ required: true, message: 'Please input your email!' }]}
         >
-          <Input onChange={(e) => setEmail(e.target.value)} />
+          <Input onChange={e => setEmail(e.target.value)} />
         </Form.Item>
 
         <Form.Item
@@ -63,13 +66,14 @@ const LoginForm = () => {
           name="password"
           rules={[{ required: true, message: 'Please input your password!' }]}
         >
-          <Input.Password onChange={(e) => setPassword(e.target.value)} />
+          <Input.Password onChange={e => setPassword(e.target.value)} />
         </Form.Item>
 
         <Form.Item
           name="remember"
           valuePropName="checked"
-          wrapperCol={{ offset: 8, span: 16 }}>
+          wrapperCol={{ offset: 8, span: 16 }}
+        >
           <Checkbox>Remember me</Checkbox>
         </Form.Item>
 
@@ -79,14 +83,15 @@ const LoginForm = () => {
           </Button>
         </Form.Item>
       </Form>
-      {isShowAlert &&
+      {isShowAlert && (
         <Alert
           message="Error"
           description="Check your email and password"
           type="error"
           showIcon
           closable
-        />}
+        />
+      )}
     </div>
   );
 };

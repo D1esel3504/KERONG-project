@@ -1,11 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
-import Lock from '../../components/Lock/Lock'
-import { Context } from '../../context'
-import { Button, Input, Typography } from 'antd'
-import { SearchOutlined } from '@ant-design/icons'
-import './Boards.scss'
-
+import React, { useContext, useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import Lock from '../../components/Lock/Lock';
+import { Context } from '../../context';
+import { Button, Input, Typography } from 'antd';
+import { SearchOutlined } from '@ant-design/icons';
+import './Boards.scss';
 
 const Boards = () => {
   let [boardList, setBoardList] = useState([]);
@@ -15,23 +14,24 @@ const Boards = () => {
   let { controllersList, updateLockInContext } = useContext(Context);
 
   useEffect(() => {
-    let boards = controllersList.find((i) => i.ip === id).boards;
+    let boards = controllersList.find(i => i.ip === id).boards;
 
-    setBoardList(boards)
+    setBoardList(boards);
 
     if (temp.length === 0) {
-      setTemp(boards)
+      setTemp(boards);
     }
+  }, [controllersList]);
 
-  }, [controllersList])
+  let filterBoards = numberBoard => {
+    let tempBoards = [...boardList];
 
-  let filterBoards = (numberBoard) => {
-    let tempBoards = [...boardList]
+    let filtredBoard = tempBoards.filter(i =>
+      i.number.toString().includes(numberBoard),
+    );
 
-    let filtredBoard = tempBoards.filter((i) => i.number.toString().includes(numberBoard))
-
-    setTemp(filtredBoard)
-  }
+    setTemp(filtredBoard);
+  };
 
   return (
     <div>
@@ -41,7 +41,7 @@ const Boards = () => {
           <Input
             placeholder="THE NUMBER OF BOARD"
             allowClear
-            onChange={(e) => setBoardInput(e.target.value)}
+            onChange={e => setBoardInput(e.target.value)}
           />
           <Button
             style={{
@@ -57,32 +57,32 @@ const Boards = () => {
         </div>
         <div className="boards">
           {temp.length
-            ? temp.map((board) => (
-              <div>
-                <span
-                  onClick={() => filterBoards(board.number)}
-                  className="choosed-board"
-                >
-                  BOARD - {board.number}
-                </span>
-                {Object.keys(board.locks).map((lock) => (
-                  <Lock
-                    lock={{
-                      lockNumber: lock,
-                      ...board.locks[lock],
-                    }}
-                    boardNumber={board.number}
-                    id={id}
-                    setLock={updateLockInContext}
-                  />
-                ))}
-              </div>
-            ))
+            ? temp.map(board => (
+                <div>
+                  <span
+                    onClick={() => filterBoards(board.number)}
+                    className="choosed-board"
+                  >
+                    BOARD - {board.number}
+                  </span>
+                  {Object.keys(board.locks).map(lock => (
+                    <Lock
+                      lock={{
+                        lockNumber: lock,
+                        ...board.locks[lock],
+                      }}
+                      boardNumber={board.number}
+                      id={id}
+                      setLock={updateLockInContext}
+                    />
+                  ))}
+                </div>
+              ))
             : 'NO BOARDS AND LOCKS'}
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Boards
+export default Boards;

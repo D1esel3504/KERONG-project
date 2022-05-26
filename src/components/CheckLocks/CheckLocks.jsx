@@ -22,7 +22,10 @@ const CheckLocks = () => {
     setIsModalVisible(false);
   };
 
-  let checkLockOnServer = (lockNumber) => fetch(`https://tms-js-pro-back-end.herokuapp.com/api/meet-rooms/${lockNumber}`);
+  let checkLockOnServer = lockNumber =>
+    fetch(
+      `https://tms-js-pro-back-end.herokuapp.com/api/meet-rooms/${lockNumber}`,
+    );
 
   let searchLock = async () => {
     try {
@@ -35,7 +38,6 @@ const CheckLocks = () => {
         showModal();
 
         lockInput = '';
-
       }
     } catch (error) {
       setIsShowAlert(true);
@@ -43,45 +45,45 @@ const CheckLocks = () => {
   };
 
   return (
-    <div className='block'>
+    <div className="block">
       <strong>CHECK LOCK</strong>
-      <div className='search'>
+      <div className="search">
         <Input
-          onChange={(e) => setLockInput(e.target.value)}
-          placeholder='ENTER THE NUMBER'
+          onChange={e => setLockInput(e.target.value)}
+          placeholder="ENTER THE NUMBER"
           allowClear
         />
         <Button
           style={{
-            marginLeft: '10px'
+            marginLeft: '10px',
           }}
           danger
           type="primary"
           onClick={searchLock}
-          icon={<SearchOutlined />}>
+          icon={<SearchOutlined />}
+        >
           Search
         </Button>
       </div>
-      {isShowAlert &&
+      {isShowAlert && (
         <Alert
           message="Error"
           description="SERVER ERROR"
           type="error"
           showIcon
           closable
-        />}
-      <Modal title={`LOCK - ${lockInput}`} visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
-        <Lock
-          lock={lock}
-          setLock={setLock}
         />
+      )}
+      <Modal
+        title={`LOCK - ${lockInput}`}
+        visible={isModalVisible}
+        onOk={handleOk}
+        onCancel={handleCancel}
+      >
+        <Lock lock={lock} setLock={setLock} />
       </Modal>
     </div>
-  )
+  );
 };
 
 export default CheckLocks;
-
-
-
-
