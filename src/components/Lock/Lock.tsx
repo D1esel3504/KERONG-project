@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import './Lock.scss';
 import { Button, Input, Typography, Tooltip } from 'antd';
 import {
@@ -7,10 +7,19 @@ import {
   SaveFilled,
   CloseCircleFilled
 } from '@ant-design/icons';
+import { ILock, status } from '../../types/types';
 
-const Lock = ({ lock, setLock, id, boardNumber }) => {
-  let [commentInputComponent, setCommentInputComponent] = useState('');
-  let [isShowEditInput, setisShowEditInput] = useState(false);
+interface LockProps {
+  lock: ILock;
+  setLock: Function;
+  id?: string;
+  boardNumber?: any;
+}
+
+
+const Lock: FC<LockProps> = ({lock, setLock, id, boardNumber } ) => {
+  let [commentInputComponent, setCommentInputComponent] = useState<string>('');
+  let [isShowEditInput, setisShowEditInput] = useState<boolean>(false);
 
   // let requestForLockonServer = (lockNumber, data) => {
   //     return fetch(`https://tms-js-pro-back-end.herokuapp.com/api/meet-rooms/${lockNumber}`,
@@ -54,7 +63,7 @@ const Lock = ({ lock, setLock, id, boardNumber }) => {
   //     };
   // };
 
-  let changeLockInLocalState = (lockNumber, data, id, boardNumber) => {
+  let changeLockInLocalState = (lockNumber: string, data: object, id: string, boardNumber: number) => {
     setLock(lockNumber, data, id, boardNumber);
     setisShowEditInput(false);
   };
@@ -136,7 +145,7 @@ const Lock = ({ lock, setLock, id, boardNumber }) => {
                     lock.lockNumber,
                     {
                       ...lock,
-                      state: lock.state === 'closed' ? 'opened' : 'closed'
+                      state: status.closed ? status.opened : status.closed
                     },
                     id,
                     boardNumber

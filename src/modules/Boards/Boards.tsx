@@ -5,16 +5,21 @@ import { Context } from '../../context';
 import { Button, Input, Typography } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import './Boards.scss';
+import { IBoard } from '../../types/types';
+
+type PropsParams = {
+  id: string;
+};
 
 const Boards = () => {
-  let [boardList, setBoardList] = useState([]);
-  let [renderedBoardList, setRenderedBoardList] = useState([]);
-  let [boardInput, setBoardInput] = useState('');
-  let { id } = useParams();
+  let [boardList, setBoardList] = useState<IBoard[]>([]);
+  let [renderedBoardList, setRenderedBoardList] = useState<IBoard[]>([]);
+  let [boardInput, setBoardInput] = useState<string>('');
+  let { id } = useParams<PropsParams>();
   let { controllersList, updateLockInContext } = useContext(Context);
 
   useEffect(() => {
-    let boards = controllersList.find(controller => controller.ip === id)
+    let boards = controllersList.find((controller: any) => controller.ip === id)
       .boards;
 
     setBoardList(boards);
@@ -24,7 +29,7 @@ const Boards = () => {
     }
   }, [controllersList]);
 
-  let filterBoards = numberBoard => {
+  let filterBoards = (numberBoard: any) => {
     let coppiedBoards = [...boardList];
 
     let filtredBoard = coppiedBoards.filter(board =>
@@ -59,26 +64,26 @@ const Boards = () => {
         <div className="boards">
           {renderedBoardList.length
             ? renderedBoardList.map(board => (
-                <div>
-                  <span
-                    onClick={() => filterBoards(board.number)}
-                    className="choosed-board"
-                  >
-                    BOARD - {board.number}
-                  </span>
-                  {Object.keys(board.locks).map(lock => (
-                    <Lock
-                      lock={{
-                        lockNumber: lock,
-                        ...board.locks[lock]
-                      }}
-                      boardNumber={board.number}
-                      id={id}
-                      setLock={updateLockInContext}
-                    />
-                  ))}
-                </div>
-              ))
+              <div>
+                <span
+                  onClick={() => filterBoards(board.number)}
+                  className="choosed-board"
+                >
+                  BOARD - {board.number}
+                </span>
+                {Object.keys(board.locks).map(lock => (
+                  <Lock
+                    lock={{
+                      lockNumber: lock,
+                      ...board.locks[lock]
+                    }}
+                    boardNumber={board.number}
+                    id={id}
+                    setLock={updateLockInContext}
+                  />
+                ))}
+              </div>
+            ))
             : 'NO BOARDS AND LOCKS'}
         </div>
       </div>

@@ -1,34 +1,37 @@
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import CheckLocks from '../../components/CheckLocks';
+import CheckLocks from '../CheckLocks';
 import { Context } from '../../context';
 import logo from '../../image/logo.jpg';
 import { MOCKED_CONTROLLERS } from '../../mockedData';
 import './Container.scss';
+import { IController } from '../../types/types';
 
-const Container = ({ children }) => {
-  let [controllersList, setControllersList] = useState([]);
+interface ContainerProps {
+  children: React.ReactNode;
+}
+
+const Container: FC<ContainerProps> = ({ children }) => {
+  let [controllersList, setControllersList] = useState<IController[]>([]);
   let location = useLocation();
 
   let getControllers = async () => {
-    let controllers = await Promise.resolve(MOCKED_CONTROLLERS);
+    let controllers: any[] = await Promise.resolve(MOCKED_CONTROLLERS);
 
     setControllersList(controllers);
   };
 
-  let updateLockInContext = (lockNumber, data, ip, boardNumber) => {
-    const updatedControllersList = [...controllersList];
+  let updateLockInContext = (lockNumber: string, data: object, ip: string, boardNumber: number) => {
+    let updatedControllersList: any[] = [...controllersList];
 
-    const controllerIndex = updatedControllersList.findIndex(
-      controller => controller.ip === ip
-    );
+    let controllerIndex: number = updatedControllersList
+      .findIndex(controller => controller.ip === ip);
 
-    const boardIndex = updatedControllersList[controllerIndex].boards.findIndex(
-      board => board.number === boardNumber
-    );
-    updatedControllersList[controllerIndex].boards[boardIndex].locks[
-      lockNumber
-    ] = data;
+    let boardIndex: number = updatedControllersList[controllerIndex]
+      .boards.findIndex((board: any) => board.number === boardNumber);
+
+    updatedControllersList[controllerIndex].boards[boardIndex]
+      .locks[lockNumber] = data;
 
     setControllersList(updatedControllersList);
   };
@@ -50,7 +53,6 @@ const Container = ({ children }) => {
   //   }
 
   //   getAllControllers();
-
   // }, []);
 
   return (
