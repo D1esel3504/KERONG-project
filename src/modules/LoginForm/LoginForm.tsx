@@ -6,14 +6,14 @@ import './LoginForm.scss';
 
 const LoginForm = () => {
   let history = useNavigate();
-  let [userEmail, setEmail] = useState('');
-  let [userPassword, setPassword] = useState('');
-  let [isShowAlert, setIsShowAlert] = useState(false);
+  let [userEmail, setEmail] = useState<string>('');
+  let [userPassword, setPassword] = useState<string>('');
+  let [isShowAlert, setIsShowAlert] = useState<boolean>(false);
 
   // 'kemalkalandarov@gmail.com'
   // 'test123'
 
-  let userData = {
+  let userData: object = {
     email: userEmail,
     password: userPassword
   };

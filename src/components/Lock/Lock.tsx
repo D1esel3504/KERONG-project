@@ -1,25 +1,14 @@
 import React, { FC, useState } from 'react';
 import './Lock.scss';
-import { Button, Input, Typography, Tooltip } from 'antd';
-import {
-  UnlockFilled,
-  EditFilled,
-  SaveFilled,
-  CloseCircleFilled
-} from '@ant-design/icons';
-import { ILock, status } from '../../types/types';
+import { Typography } from 'antd';
+import EditCommentComponent from '../EditCommentComponent/EditCommentComponent';
+import CommentButton from '../CommentButton/CommentButton';
+import ChangeStatusButton from '../ChangeStatusButton/ChangeStatusButton';
+import { LockProps } from '../../types/types';
 
-interface LockProps {
-  lock: ILock;
-  setLock: Function;
-  id?: string;
-  boardNumber?: any;
-}
-
-
-const Lock: FC<LockProps> = ({lock, setLock, id, boardNumber } ) => {
-  let [commentInputComponent, setCommentInputComponent] = useState<string>('');
+const Lock: FC<LockProps> = ({ lock, setLock, id, boardNumber }) => {
   let [isShowEditInput, setisShowEditInput] = useState<boolean>(false);
+  
 
   // let requestForLockonServer = (lockNumber, data) => {
   //     return fetch(`https://tms-js-pro-back-end.herokuapp.com/api/meet-rooms/${lockNumber}`,
@@ -76,85 +65,25 @@ const Lock: FC<LockProps> = ({lock, setLock, id, boardNumber } ) => {
             NUMBER - {lock.lockNumber}
           </Typography.Title>
           {isShowEditInput ? (
-            <div className="lock-description">
-              <Input
-                placeholder="ENTER THE COMMENT"
-                allowClear
-                onChange={e => setCommentInputComponent(e.target.value)}
-                size="small"
-              />
-              <div className="lock-description__buttons">
-                <Tooltip title="save comment">
-                  <Button
-                    size="large"
-                    type="primary"
-                    onClick={() =>
-                      changeLockInLocalState(
-                        lock.lockNumber,
-                        {
-                          ...lock,
-                          comment: commentInputComponent
-                        },
-                        id,
-                        boardNumber
-                      )
-                    }
-                    icon={<SaveFilled />}
-                    danger
-                  />
-                </Tooltip>
-                <Tooltip title="close">
-                  <Button
-                    size="large"
-                    type="primary"
-                    onClick={() => setisShowEditInput(false)}
-                    icon={<CloseCircleFilled />}
-                    danger
-                    style={{
-                      marginLeft: '5px'
-                    }}
-                  />
-                </Tooltip>
-              </div>
-            </div>
+            <EditCommentComponent
+              lock={lock}
+              changeLockInLocalState={changeLockInLocalState}
+              id={id}
+              boardNumber={boardNumber}
+              setisShowEditInput={setisShowEditInput}
+            />
           ) : (
-            <div className="lock-description">
-              <span className="lock-description__comment">
-                COMMENT - {lock.comment || 'empty'}
-              </span>
-              <Tooltip title="edit comment">
-                <Button
-                  type="primary"
-                  size="large"
-                  onClick={() => setisShowEditInput(true)}
-                  icon={<EditFilled />}
-                  danger
-                />
-              </Tooltip>
-            </div>
+            <CommentButton
+              lock={lock}
+              setisShowEditInput={setisShowEditInput}
+            />
           )}
-          <div className="lock-description">
-            <span> STATUS - {lock.state}</span>
-            <Tooltip title="open lock">
-              <Button
-                type="primary"
-                size="large"
-                icon={<UnlockFilled />}
-                onClick={() =>
-                  changeLockInLocalState(
-                    lock.lockNumber,
-                    {
-                      ...lock,
-                      state: status.closed ? status.opened : status.closed
-                    },
-                    id,
-                    boardNumber
-                  )
-                }
-                danger
-              />
-            </Tooltip>
-          </div>
+          <ChangeStatusButton
+            lock={lock}
+            changeLockInLocalState={changeLockInLocalState}
+            id={id}
+            boardNumber={boardNumber}
+          />
         </div>
       )}
     </>

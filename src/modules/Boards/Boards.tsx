@@ -1,17 +1,17 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { FC, useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import Lock from '../../components/Lock/Lock';
 import { Context } from '../../context';
 import { Button, Input, Typography } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import './Boards.scss';
 import { IBoard } from '../../types/types';
+import BoardsItem from '../../components/BoardsItem/BoardsItem'
 
 type PropsParams = {
   id: string;
 };
 
-const Boards = () => {
+const Boards: FC = () => {
   let [boardList, setBoardList] = useState<IBoard[]>([]);
   let [renderedBoardList, setRenderedBoardList] = useState<IBoard[]>([]);
   let [boardInput, setBoardInput] = useState<string>('');
@@ -64,25 +64,12 @@ const Boards = () => {
         <div className="boards">
           {renderedBoardList.length
             ? renderedBoardList.map(board => (
-              <div>
-                <span
-                  onClick={() => filterBoards(board.number)}
-                  className="choosed-board"
-                >
-                  BOARD - {board.number}
-                </span>
-                {Object.keys(board.locks).map(lock => (
-                  <Lock
-                    lock={{
-                      lockNumber: lock,
-                      ...board.locks[lock]
-                    }}
-                    boardNumber={board.number}
-                    id={id}
-                    setLock={updateLockInContext}
-                  />
-                ))}
-              </div>
+              <BoardsItem
+                board={board}
+                id={id}
+                filterBoards={filterBoards}
+                updateLockInContext={updateLockInContext}
+              />
             ))
             : 'NO BOARDS AND LOCKS'}
         </div>
