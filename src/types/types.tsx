@@ -28,6 +28,6 @@ export interface LockProps {
     lock: ILock;
     setLock?: Function;
     id?: string;
-    boardNumber?: any;
+    boardNumber?: number;
     children?: React.ReactNode;
   }
