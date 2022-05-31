@@ -4,7 +4,7 @@ import { Context } from '../../context';
 import { Button, Input, Typography } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import './Boards.scss';
-import { IBoard } from '../../types/types';
+import { IBoard, IController } from '../../types/types';
 import BoardsItem from '../../components/BoardsItem/BoardsItem'
 
 type PropsParams = {
@@ -19,7 +19,7 @@ const Boards: FC = () => {
   let { controllersList, updateLockInContext } = useContext(Context);
 
   useEffect(() => {
-    let boards = controllersList.find((controller: any) => controller.ip === id)
+    let boards = controllersList.find((controller: IController) => controller.ip === id)
       .boards;
 
     setBoardList(boards);
@@ -29,10 +29,10 @@ const Boards: FC = () => {
     }
   }, [controllersList]);
 
-  let filterBoards = (numberBoard: any) => {
+  let filterBoards = (numberBoard: string): void => {
     let coppiedBoards = [...boardList];
 
-    let filtredBoard = coppiedBoards.filter(board =>
+    let filtredBoard = coppiedBoards.filter((board: IBoard) =>
       board.number.toString().includes(numberBoard)
     );
 

@@ -3,7 +3,7 @@ import './CheckLocks.scss';
 import Lock from '../Lock/Lock';
 import { Modal, Button, Input, Alert } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
-import { ILock } from '../../types/types';
+import { IBoard, IController, ILock } from '../../types/types';
 
 const CheckLocks: FC = () => {
   let [lock, setLock] = useState<ILock | null>(null);
@@ -11,24 +11,24 @@ const CheckLocks: FC = () => {
   let [lockInput, setLockInput] = useState<string>('');
   let [isShowAlert, setIsShowAlert] = useState<boolean>(false);
 
-  let showModal = () => {
+  let showModal = (): void => {
     setIsModalVisible(true);
   };
 
-  let handleOk = () => {
+  let handleOk = (): void => {
     setIsModalVisible(false);
   };
 
-  let handleCancel = () => {
+  let handleCancel = (): void => {
     setIsModalVisible(false);
   };
 
-  let checkLockOnServer = (lockNumber: string) =>
+  let checkLockOnServer = (lockNumber: string): Promise<any> =>
     fetch(
       `https://tms-js-pro-back-end.herokuapp.com/api/meet-rooms/${lockNumber}`
     );
 
-  let searchLock = async () => {
+  let searchLock = async (): Promise<any> => {
     try {
       if (lockInput !== '') {
         let result = await checkLockOnServer(lockInput);

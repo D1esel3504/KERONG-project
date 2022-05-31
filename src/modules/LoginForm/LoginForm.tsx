@@ -13,11 +13,6 @@ const LoginForm: FC = () => {
   // 'kemalkalandarov@gmail.com'
   // 'test123'
 
-  let userData: object = {
-    email: userEmail,
-    password: userPassword
-  };
-
   let handleLogIn = async () => {
     try {
       let response = await fetch(
@@ -27,7 +22,12 @@ const LoginForm: FC = () => {
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify(userData)
+          body: JSON.stringify(
+            {
+              email: userEmail,
+              password: userPassword
+            }
+          )
         }
       );
 

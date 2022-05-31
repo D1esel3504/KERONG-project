@@ -31,7 +31,7 @@ const Controllers: FC = () => {
     }
   ];
 
-  let goToBoard = (ip: string) => navigate(`/boards/${ip}`);
+  let goToBoard = (ip: string): void => navigate(`/boards/${ip}`);
 
   return (
     <div>

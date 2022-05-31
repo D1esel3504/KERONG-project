@@ -28,7 +28,7 @@ const ChangeStatusButton: FC<ChangeStatusButtonProps> = ({
               lock.lockNumber,
               {
                 ...lock,
-                state: status.closed ? status.opened : status.closed,
+                state: lock.state=== status.closed ? status.opened : status.closed,
               },
               id,
               boardNumber,
