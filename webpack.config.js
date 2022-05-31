@@ -28,8 +28,6 @@ let optimization = () => {
     return config
 }
 
-
-
 module.exports = {
     entry: {
         main: path.resolve(__dirname, './src/index.js'),
@@ -40,6 +38,7 @@ module.exports = {
     devServer: {
         port: 3000,
         hot: isDev,
+        historyApiFallback: true,
         static: {
             directory: path.join(__dirname, './public'),
         },
