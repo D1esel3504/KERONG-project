@@ -62,7 +62,7 @@ const Lock: FC<LockProps> = ({ lock, setLock, id, boardNumber }) => {
       {lock && (
         <div className="lock-block">
           <Typography.Title style={{ margin: 0 }} level={5}>
-            NUMBER - {lock.lockNumber}
+            {` NUMBER - ${lock.lockNumber}`}
           </Typography.Title>
           {isShowEditInput ? (
             <EditCommentComponent

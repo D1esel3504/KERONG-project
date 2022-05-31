@@ -10,7 +10,6 @@ export interface ILockInfo {
 
 export interface ILock {
     [lockNumber: string ]: ILockInfo;
-    
 };
 
 export interface IBoard {
@@ -29,5 +28,4 @@ export interface LockProps {
     setLock?: Function;
     id?: string;
     boardNumber?: number;
-    children?: React.ReactNode;
   }

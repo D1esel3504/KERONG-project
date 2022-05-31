@@ -8,10 +8,12 @@ interface CommentButtonProps extends LockProps {
 }
 
 const CommentButton: FC<CommentButtonProps> = ({ lock, setisShowEditInput }) => {
+  let commentText: string = `COMMENT - ${lock.comment || 'empty'}`;
+
   return (
     <div className="lock-description">
       <span className="lock-description__comment">
-        COMMENT - {lock.comment || 'empty'}
+        {commentText}
       </span>
       <Tooltip title="edit comment">
         <Button

@@ -5,7 +5,6 @@ import { LockProps, status } from '../../types/types';
 
 interface ChangeStatusButtonProps extends LockProps {
   changeLockInLocalState: Function,
-  children?: React.ReactNode
 }
 
 const ChangeStatusButton: FC<ChangeStatusButtonProps> = ({
@@ -14,10 +13,12 @@ const ChangeStatusButton: FC<ChangeStatusButtonProps> = ({
   id,
   boardNumber,
 }) => {
+  let statusText: string = `STATUS - ${lock.state}`;
+  let lockState: string = lock.state.toString() === status.closed ? status.opened : status.closed;
 
   return (
     <div className="lock-description">
-      <span> STATUS - {lock.state}</span>
+      <span>{statusText}</span>
       <Tooltip title="open lock">
         <Button
           type="primary"
@@ -28,7 +29,7 @@ const ChangeStatusButton: FC<ChangeStatusButtonProps> = ({
               lock.lockNumber,
               {
                 ...lock,
-                state: lock.state=== status.closed ? status.opened : status.closed,
+                state: lockState,
               },
               id,
               boardNumber,
