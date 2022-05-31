@@ -5,7 +5,7 @@ import { Context } from '../../context';
 import logo from '../../image/logo.jpg';
 import { MOCKED_CONTROLLERS } from '../../mockedData';
 import './Container.scss';
-import { IController } from '../../types/types';
+import { IBoard, IController, ILock } from '../../types/types';
 
 interface ContainerProps {
   children: React.ReactNode;
@@ -21,14 +21,14 @@ const Container: FC<ContainerProps> = ({ children }) => {
     setControllersList(controllers);
   };
 
-  let updateLockInContext = (lockNumber: string, data: object, ip: string, boardNumber: number) => {
+  let updateLockInContext = (lockNumber: string, data: ILock, ip: string, boardNumber: number) => {
     let updatedControllersList: any[] = [...controllersList];
 
     let controllerIndex: number = updatedControllersList
-      .findIndex(controller => controller.ip === ip);
+      .findIndex((controller: IController) => controller.ip === ip);
 
     let boardIndex: number = updatedControllersList[controllerIndex]
-      .boards.findIndex((board: any) => board.number === boardNumber);
+      .boards.findIndex((board: IBoard) => board.number === boardNumber);
 
     updatedControllersList[controllerIndex].boards[boardIndex]
       .locks[lockNumber] = data;
