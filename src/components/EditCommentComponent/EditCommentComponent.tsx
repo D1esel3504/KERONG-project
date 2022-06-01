@@ -24,6 +24,7 @@ const EditCommentComponent: FC<EditCommentComponentProps> = ({
         allowClear
         onChange={e => setCommentInputComponent(e.target.value)}
         size="small"
+        defaultValue={lock.comment}
       />
       <div className="lock-description__buttons">
         <Tooltip title="save comment">
