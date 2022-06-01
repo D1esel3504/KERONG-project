@@ -3,13 +3,15 @@ import './CheckLocks.scss';
 import Lock from '../Lock/Lock';
 import { Modal, Button, Input, Alert } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
-import { IBoard, IController, ILock } from '../../types/types';
+import { ILock } from '../../types/types';
+import axios from 'axios';
 
 const CheckLocks: FC = () => {
   let [lock, setLock] = useState<ILock | null>(null);
   let [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   let [lockInput, setLockInput] = useState<string>('');
   let [isShowAlert, setIsShowAlert] = useState<boolean>(false);
+  let [showError, setShowError] = useState<string>('');
 
   let showModal = (): void => {
     setIsModalVisible(true);
@@ -23,27 +25,46 @@ const CheckLocks: FC = () => {
     setIsModalVisible(false);
   };
 
-  let checkLockOnServer = (lockNumber: string): Promise<any> =>
-    fetch(
-      `https://tms-js-pro-back-end.herokuapp.com/api/meet-rooms/${lockNumber}`
-    );
+  // let checkLockOnServer = (lockNumber: string): Promise<any> =>
+  //   fetch(
+  //     `https://tms-js-pro-back-end.herokuapp.com/api/meet-rooms/${lockNumber}`
+  //   );
 
-  let searchLock = async (): Promise<any> => {
+  // let searchLock = async (): Promise<any> => {
+  //   try {
+  //     if (lockInput !== '') {
+  //       let result = await checkLockOnServer(lockInput);
+  //       let json = await result.json();
+
+  //       setLock(json);
+
+  //       showModal();
+
+  //       lockInput = '';
+  //     }
+  //   } catch (error) {
+  //     setIsShowAlert(true);
+  //   }
+  // };
+
+  let searchLock = async (lockNumber: string) => {
     try {
-      if (lockInput !== '') {
-        let result = await checkLockOnServer(lockInput);
-        let json = await result.json();
+      await axios.get<ILock>(
+        `https://tms-js-pro-back-end.herokuapp.com/api/meet-rooms/${lockNumber}`)
+        .then(res => {
+          let result = res.data;
+          setLock(result);
 
-        setLock(json);
+          showModal();
 
-        showModal();
-
-        lockInput = '';
-      }
-    } catch (error) {
+          lockInput = '';
+        })
+    }
+    catch (error) {
+      setShowError(error.message)
       setIsShowAlert(true);
     }
-  };
+  }
 
   return (
     <div className="block">
@@ -60,7 +81,7 @@ const CheckLocks: FC = () => {
           }}
           danger
           type="primary"
-          onClick={searchLock}
+          onClick={() => searchLock(lockInput)}
           icon={<SearchOutlined />}
         >
           Search
@@ -69,7 +90,7 @@ const CheckLocks: FC = () => {
       {isShowAlert && (
         <Alert
           message="Error"
-          description="SERVER ERROR"
+          description={showError}
           type="error"
           showIcon
           closable

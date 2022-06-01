@@ -4,56 +4,32 @@ import { Typography } from 'antd';
 import EditCommentComponent from '../EditCommentComponent/EditCommentComponent';
 import CommentButton from '../CommentButton/CommentButton';
 import ChangeStatusButton from '../ChangeStatusButton/ChangeStatusButton';
-import { LockProps } from '../../types/types';
+import { ILock, LockProps } from '../../types/types';
+import axios from 'axios';
 
 const Lock: FC<LockProps> = ({ lock, setLock, id, boardNumber }) => {
   let [isShowEditInput, setisShowEditInput] = useState<boolean>(false);
-  
 
-  // let requestForLockonServer = (lockNumber, data) => {
-  //     return fetch(`https://tms-js-pro-back-end.herokuapp.com/api/meet-rooms/${lockNumber}`,
-  //         {
-  //             method: 'PUT',
-  //             body: JSON.stringify(data),
-  //             headers: {
-  //                 'Content-Type': 'application/json',
-  //                 Authorization: Token `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImtlbWFsa2FsYW5kYXJvdkBnbWFpbC5jb20iLCJpZCI6IjYxMDJiOWMxMmFhYTkwMGMwZTI2OGFkZSIsImV4cCI6MTY1NzMxNTM1NSwiaWF0IjoxNjUyMTMxMzU1fQ.c62OU82mCuRHxOZDMDyXaKhm3LYXS7kvywUXXfiMH2M`,
-  //             },
-  //         });
-  // };
+  // let changeLockInLocalState = async (lockNumber: string, dataLock: object) => {
+  //   try {
+  //     await axios({
+  //       method: 'put',
+  //       url: `https://tms-js-pro-back-end.herokuapp.com/api/meet-rooms/${lockNumber}`,
+  //       data: dataLock,
+  //     })
+  //       .then((res) => {
+  //         let result = res.data
 
-  // let openLockOnServer = async () => {
-  //     try {
-  //         let result = await requestForLockonServer(lock.id, dataForChangeStatus);
-  //         let json = await result.json();
-
-  //         console.log('Success:', JSON.stringify(json));
-
-  //         setLock(json);
-
-  //     } catch (error) {
-  //         console.error('error-' + error);
-  //     };
-  // };
-
-  // let changeCommentOnServer = async () => {
-  //     try {
-  //         let result = await requestForLockonServer(lock.id, dataForChangeComment)
-  //         let json = await result.json();
-
-  //         console.log('Success:', JSON.stringify(json));
-
-  //         setLock(json);
-
+  //         setLock(result);
   //         setisShowEditInput(false);
+  //       })
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
 
-  //     } catch (error) {
-  //         console.error('error-' + error);
-  //     };
-  // };
-
-  let changeLockInLocalState = (lockNumber: string, data: object, id: string, boardNumber: number) => {
-    setLock(lockNumber, data, id, boardNumber);
+  let changeLockInLocalState = (lockNumber: string, dataLock: object, id: string, boardNumber: number) => {
+    setLock(lockNumber, dataLock, id, boardNumber);
     setisShowEditInput(false);
   };
 

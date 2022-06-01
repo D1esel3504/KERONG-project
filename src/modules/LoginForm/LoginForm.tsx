@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Form, Input, Button, Checkbox, Alert } from 'antd';
 import 'antd/dist/antd.css';
 import './LoginForm.scss';
+import axios from 'axios';
 
 const LoginForm: FC = () => {
   let history = useNavigate();
@@ -10,38 +11,25 @@ const LoginForm: FC = () => {
   let [userPassword, setPassword] = useState<string>('');
   let [isShowAlert, setIsShowAlert] = useState<boolean>(false);
 
-  // 'kemalkalandarov@gmail.com'
-  // 'test123'
-
   let handleLogIn = async () => {
     try {
-      let response = await fetch(
-        'https://tms-js-pro-back-end.herokuapp.com/api/users/signin',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(
-            {
-              email: userEmail,
-              password: userPassword
-            }
-          )
-        }
-      );
-
-      if (response.status === 200) {
-        history('/');
-      } else {
-        setIsShowAlert(true);
-        console.log(response);
-      }
+      await axios({
+        method: 'post',
+        url: 'https://jsonplaceholder.typicode.com/posts',
+        data: {
+          email: userEmail,
+          password: userPassword
+        },
+      })
+        .then((res) => {
+          if (res.status === 200) {
+            history('/')
+          }
+        })
     } catch (error) {
       setIsShowAlert(true);
-      console.log('dsdsd', error);
     }
-  };
+  }
 
   return (
     <div className="form">

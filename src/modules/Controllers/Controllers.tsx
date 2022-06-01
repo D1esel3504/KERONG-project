@@ -6,10 +6,10 @@ import { Button, Typography, Table } from 'antd';
 
 const Controllers: FC = () => {
   let navigate = useNavigate();
-  let { controllersList, getControllers } = useContext(Context);
+  let { controllersList, getAllControllers } = useContext(Context);
 
   useEffect(() => {
-    getControllers();
+    getAllControllers();
   }, []);
 
   let columns: any[] = [
