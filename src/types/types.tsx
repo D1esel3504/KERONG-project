@@ -9,7 +9,7 @@ export interface ILockInfo {
 }
 
 export interface ILock {
-    [lockNumber: string ]: ILockInfo;
+    [lockNumber: string] : any;
 };
 
 export interface IBoard {
