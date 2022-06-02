@@ -5,7 +5,7 @@ import 'antd/dist/antd.css';
 import Container from './components/Container';
 import Boards from './modules/Boards/Boards';
 import Controllers from './modules/Controllers';
-import LoginForm from './modules/LoginForm/LoginForm';
+import LoginForm from './modules/LoginForm';
 
 const App = () => {
   return (

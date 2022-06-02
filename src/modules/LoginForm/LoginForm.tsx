@@ -1,22 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Form, Input, Button, Checkbox, Alert } from 'antd';
 import 'antd/dist/antd.css';
 import './LoginForm.scss';
 
-const LoginForm = () => {
+const LoginForm: FC = () => {
   let history = useNavigate();
-  let [userEmail, setEmail] = useState('');
-  let [userPassword, setPassword] = useState('');
-  let [isShowAlert, setIsShowAlert] = useState(false);
+  let [userEmail, setEmail] = useState<string>('');
+  let [userPassword, setPassword] = useState<string>('');
+  let [isShowAlert, setIsShowAlert] = useState<boolean>(false);
 
   // 'kemalkalandarov@gmail.com'
   // 'test123'
-
-  let userData = {
-    email: userEmail,
-    password: userPassword
-  };
 
   let handleLogIn = async () => {
     try {
@@ -27,7 +22,12 @@ const LoginForm = () => {
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify(userData)
+          body: JSON.stringify(
+            {
+              email: userEmail,
+              password: userPassword
+            }
+          )
         }
       );
 

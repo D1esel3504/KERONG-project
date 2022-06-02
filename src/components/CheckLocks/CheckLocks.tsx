@@ -1,33 +1,34 @@
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import './CheckLocks.scss';
 import Lock from '../Lock/Lock';
 import { Modal, Button, Input, Alert } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
+import { IBoard, IController, ILock } from '../../types/types';
 
-const CheckLocks = () => {
-  let [lock, setLock] = useState(null);
-  let [isModalVisible, setIsModalVisible] = useState(false);
-  let [lockInput, setLockInput] = useState('');
-  let [isShowAlert, setIsShowAlert] = useState(false);
+const CheckLocks: FC = () => {
+  let [lock, setLock] = useState<ILock | null>(null);
+  let [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  let [lockInput, setLockInput] = useState<string>('');
+  let [isShowAlert, setIsShowAlert] = useState<boolean>(false);
 
-  let showModal = () => {
+  let showModal = (): void => {
     setIsModalVisible(true);
   };
 
-  let handleOk = () => {
+  let handleOk = (): void => {
     setIsModalVisible(false);
   };
 
-  let handleCancel = () => {
+  let handleCancel = (): void => {
     setIsModalVisible(false);
   };
 
-  let checkLockOnServer = lockNumber =>
+  let checkLockOnServer = (lockNumber: string): Promise<any> =>
     fetch(
       `https://tms-js-pro-back-end.herokuapp.com/api/meet-rooms/${lockNumber}`
     );
 
-  let searchLock = async () => {
+  let searchLock = async (): Promise<any> => {
     try {
       if (lockInput !== '') {
         let result = await checkLockOnServer(lockInput);
