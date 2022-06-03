@@ -1,18 +1,18 @@
-import React, { useEffect, useContext } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import React, { useEffect, useContext, FC } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Controllers.scss';
 import { Context } from '../../context';
 import { Button, Typography, Table } from 'antd';
 
-const Controllers = () => {
+const Controllers: FC = () => {
   let navigate = useNavigate();
-  let { controllersList, getControllers } = useContext(Context);
+  let { controllersList, getAllControllers } = useContext(Context);
 
   useEffect(() => {
-    getControllers();
+    getAllControllers();
   }, []);
 
-  let columns = [
+  let columns: any[] = [
     {
       title: 'Number',
       dataIndex: 'number'
@@ -23,7 +23,7 @@ const Controllers = () => {
     },
     {
       title: 'Boards',
-      render: boards => (
+      render: (boards: any) => (
         <Button type="primary" danger onClick={() => goToBoard(boards.ip)}>
           GO TO THE BOARDS
         </Button>
@@ -31,7 +31,7 @@ const Controllers = () => {
     }
   ];
 
-  let goToBoard = ip => navigate(`/boards/${ip}`);
+  let goToBoard = (ip: string): void => navigate(`/boards/${ip}`);
 
   return (
     <div>
