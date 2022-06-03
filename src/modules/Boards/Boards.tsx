@@ -15,7 +15,7 @@ const Boards: FC = () => {
   let [boardList, setBoardList] = useState<IBoard[]>([]);
   let [renderedBoardList, setRenderedBoardList] = useState<IBoard[]>([]);
   let [boardInput, setBoardInput] = useState<string>('');
-  let { id } = useParams<PropsParams>();
+  let { id = '' } = useParams<PropsParams>();
   let { controllersList, updateLockInContext } = useContext(Context);
 
   useEffect(() => {
@@ -32,11 +32,11 @@ const Boards: FC = () => {
   let filterBoards = (numberBoard: string): void => {
     let coppiedBoards = [...boardList];
 
-    let filtredBoard = coppiedBoards.filter((board: IBoard) =>
+    let filtredBoards = coppiedBoards.filter((board: IBoard) =>
       board.number.toString().includes(numberBoard)
     );
 
-    setRenderedBoardList(filtredBoard);
+    setRenderedBoardList(filtredBoards);
   };
 
   return (

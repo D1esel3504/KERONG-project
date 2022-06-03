@@ -4,10 +4,14 @@ import { Typography } from 'antd';
 import EditCommentComponent from '../EditCommentComponent/EditCommentComponent';
 import CommentButton from '../CommentButton/CommentButton';
 import ChangeStatusButton from '../ChangeStatusButton/ChangeStatusButton';
-import { ILock, LockProps, ILockInfo } from '../../types/types';
+import { LockProps, ILockInfo } from '../../types/types';
 import axios from 'axios';
 
-const Lock: FC<LockProps> = ({ lock, setLock, id, boardNumber }) => {
+interface LockComponentProps extends LockProps {
+  setLock: (lockNumber: string, data: ILockInfo, ip: string, boardNumber: string) => void;
+}
+
+const Lock: FC<LockComponentProps> = ({ lock, setLock, id, boardNumber }) => {
   let [isShowEditInput, setisShowEditInput] = useState<boolean>(false);
 
   // let changeLockInLocalState = async (lockNumber: string, dataLock: ILockInfo) => {
@@ -28,12 +32,10 @@ const Lock: FC<LockProps> = ({ lock, setLock, id, boardNumber }) => {
   //   }
   // }
 
-  let changeLockInLocalState = (lockNumber: string, dataLock: ILockInfo, id: string, boardNumber: number) => {
+  let changeLockInLocalState = (lockNumber: string, dataLock: ILockInfo, id: string, boardNumber: string) => {
     setLock(lockNumber, dataLock, id, boardNumber);
     setisShowEditInput(false);
   };
-
-
 
   return (
     <>

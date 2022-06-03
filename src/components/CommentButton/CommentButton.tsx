@@ -1,10 +1,11 @@
 import React, { FC } from 'react';
 import { Button, Tooltip } from 'antd';
 import { EditFilled } from '@ant-design/icons';
-import { LockProps } from '../../types/types';
+import { ILockKeys, LockProps } from '../../types/types';
 
-interface CommentButtonProps extends LockProps {
-  setisShowEditInput: Function;
+interface CommentButtonProps {
+  lock: ILockKeys;
+  setisShowEditInput: (param: boolean) => void;
 }
 
 const CommentButton: FC<CommentButtonProps> = ({ lock, setisShowEditInput }) => {

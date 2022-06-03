@@ -1,10 +1,10 @@
 import React, { FC } from 'react';
 import { Button, Tooltip } from 'antd';
 import { UnlockFilled } from '@ant-design/icons';
-import { LockProps, status } from '../../types/types';
+import { ILockInfo, LockProps, status } from '../../types/types';
 
 interface ChangeStatusButtonProps extends LockProps {
-  changeLockInLocalState: Function,
+  changeLockInLocalState: (lockNumber: string, dataLock: ILockInfo, boardNumber: string, id: string) => void;
 }
 
 const ChangeStatusButton: FC<ChangeStatusButtonProps> = ({
@@ -14,7 +14,7 @@ const ChangeStatusButton: FC<ChangeStatusButtonProps> = ({
   boardNumber,
 }) => {
   let statusText: string = `STATUS - ${lock.state}`;
-  let lockState: string = lock.state.toString() === status.closed ? status.opened : status.closed;
+  let lockState: status = lock.state.toString() === status.closed ? status.opened : status.closed;
 
   return (
     <div className="lock-description">

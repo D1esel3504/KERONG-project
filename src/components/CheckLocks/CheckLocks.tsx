@@ -25,28 +25,6 @@ const CheckLocks: FC = () => {
     setIsModalVisible(false);
   };
 
-  // let checkLockOnServer = (lockNumber: string): Promise<any> =>
-  //   fetch(
-  //     `https://tms-js-pro-back-end.herokuapp.com/api/meet-rooms/${lockNumber}`
-  //   );
-
-  // let searchLock = async (): Promise<any> => {
-  //   try {
-  //     if (lockInput !== '') {
-  //       let result = await checkLockOnServer(lockInput);
-  //       let json = await result.json();
-
-  //       setLock(json);
-
-  //       showModal();
-
-  //       lockInput = '';
-  //     }
-  //   } catch (error) {
-  //     setIsShowAlert(true);
-  //   }
-  // };
-
   let searchLock = async (lockNumber: string) => {
     try {
       await axios.get<ILock>(
@@ -61,12 +39,24 @@ const CheckLocks: FC = () => {
         })
     }
     catch (error) {
-      setShowError(error.message)
-      setIsShowAlert(true);
+      if (axios.isAxiosError(error)) {
+        setShowError(error.message)
+        setIsShowAlert(true);
+        throw error;
+      }
     }
   }
 
+  let handleCommentSubmitted = () => {
+    showModal()
+  }
+
+  let handleOpened = () => {
+    showModal()
+  }
+
   return (
+
     <div className="block">
       <strong>CHECK LOCK</strong>
       <div className="search">
@@ -102,7 +92,14 @@ const CheckLocks: FC = () => {
         onOk={handleOk}
         onCancel={handleCancel}
       >
-        <Lock lock={lock} setLock={setLock} />
+        {lock !== null && <Lock lock={{
+          lockNumber: lock.number,
+          state: lock.state,
+          comment: lock.comment
+        }}
+          onCommentSubmitted={handleCommentSubmitted}
+          onLockOpened={handleOpened}
+        />}
       </Modal>
     </div>
   );

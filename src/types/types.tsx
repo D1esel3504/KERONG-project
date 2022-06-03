@@ -9,23 +9,29 @@ export interface ILockInfo {
 }
 
 export interface ILock {
-    [lockNumber: string] : any;
+    [lockNumber: string]: ILockInfo;
 };
 
 export interface IBoard {
-    number: number;
+    number: string;
     locks: ILock;
 };
 
 export interface IController {
     number: number;
     ip: string;
-    boards: IBoard;
+    boards: IBoard[];
 };
 
 export interface LockProps {
-    lock: ILock;
-    setLock?: Function;
-    id?: string;
-    boardNumber?: number;
-  }
+    lock: ILockKeys;
+    id: string;
+    boardNumber: string;
+}
+
+export type ILockKeys = {
+    lockNumber: string;
+    state: status;
+    comment: string;
+}
+

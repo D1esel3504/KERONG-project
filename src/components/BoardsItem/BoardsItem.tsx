@@ -1,12 +1,12 @@
 import React, { FC } from 'react';
-import { IBoard } from '../../types/types';
+import { IBoard, ILockInfo } from '../../types/types';
 import Lock from '../Lock/Lock';
 
 interface BoardsItemProps {
   board: IBoard;
-  filterBoards?: Function;
-  id?: string;
-  updateLockInContext?: Function;
+  filterBoards: (numberBoard: string) => void;
+  id: string;
+  updateLockInContext: (lockNumber: string, data: ILockInfo, ip: string, boardNumber: string) => void;
 }
 
 const BoardsItem: FC<BoardsItemProps> = ({ board, id, filterBoards, updateLockInContext }) => {

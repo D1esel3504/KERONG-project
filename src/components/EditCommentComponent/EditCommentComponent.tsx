@@ -1,11 +1,11 @@
 import React, { useState, FC } from 'react';
 import { Input, Button, Tooltip } from 'antd';
 import { SaveFilled, CloseCircleFilled } from '@ant-design/icons';
-import { LockProps } from '../../types/types';
+import { ILockInfo, LockProps } from '../../types/types';
 
 interface EditCommentComponentProps extends LockProps {
-  setisShowEditInput: Function;
-  changeLockInLocalState: Function;
+  setisShowEditInput: (param: boolean) => void;
+  changeLockInLocalState: (lockNumber: string, dataLock: ILockInfo, id: string, boardNumber: string) => void;
 }
 
 const EditCommentComponent: FC<EditCommentComponentProps> = ({
