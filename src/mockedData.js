@@ -58,7 +58,7 @@ export const MOCKED_CONTROLLERS = [
     ]
   },
   {
-    number: 2,
+    number: 1,
     ip: '10.3.2.6',
     boards: [
       {

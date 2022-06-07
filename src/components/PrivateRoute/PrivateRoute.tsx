@@ -1,18 +1,19 @@
 import Controllers from '../../modules/Controllers';
 import React, { FC } from 'react';
-import { Navigate } from 'react-router-dom';
-
+import { Navigate, Outlet, useLocation } from 'react-router-dom';
 
 const PrivateRoute: FC = () => {
+  let location = useLocation();
+
   let token: string | null = localStorage.getItem('TOKEN')
 
   let redirectionScreen = token ? (
-    <Navigate to='/not-found' />
+    <Navigate to='/' state={{ from: location }} replace />
   ) : (
-    <Navigate to='/login' />
+    <Navigate to='/login' state={{ from: location }} replace />
   );
 
-  return token ? <Controllers /> : redirectionScreen;
+  return token ? <Outlet /> : redirectionScreen;
 }
 
 export default PrivateRoute;
