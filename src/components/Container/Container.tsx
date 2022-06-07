@@ -6,7 +6,7 @@ import logo from '../../image/logo.jpg';
 import { MOCKED_CONTROLLERS } from '../../mockedData';
 import './Container.scss';
 import { Alert } from 'antd';
-import {  IController, ILockKeys } from '../../types/types';
+import { IController, ILockKeys } from '../../types/types';
 import axios from 'axios';
 
 interface ContainerProps {
@@ -58,7 +58,9 @@ const Container: FC<ContainerProps> = ({ children }) => {
       <div className="container">
         <div className="header">
           <img className="header__logo" alt="logo" src={logo} />
-          {location.pathname !== '/login' && <CheckLocks />}
+          {location.pathname !== '/login'
+            && location.pathname === undefined
+            && <CheckLocks />}
         </div>
         <div>{children}</div>
         {isShowAlert && (
