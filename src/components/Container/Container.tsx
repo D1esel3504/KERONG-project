@@ -6,7 +6,7 @@ import logo from '../../image/logo.jpg';
 import { MOCKED_CONTROLLERS } from '../../mockedData';
 import './Container.scss';
 import { Alert } from 'antd';
-import { IController, ILockKeys } from '../../types/types';
+import {  IController, ILockKeys } from '../../types/types';
 import axios from 'axios';
 
 interface ContainerProps {

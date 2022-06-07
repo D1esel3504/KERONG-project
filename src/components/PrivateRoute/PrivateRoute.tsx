@@ -6,7 +6,6 @@ import { Navigate } from 'react-router-dom';
 const PrivateRoute: FC = () => {
   let token: string | null = localStorage.getItem('TOKEN')
 
-
   let redirectionScreen = token ? (
     <Navigate to='/not-found' />
   ) : (

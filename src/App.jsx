@@ -7,6 +7,7 @@ import Boards from './modules/Boards/Boards';
 import Controllers from './modules/Controllers';
 import LoginForm from './modules/LoginForm';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
+import NotFound from './components/NotFound/NotFound';
 
 const App = () => {
   return (
@@ -14,10 +15,12 @@ const App = () => {
       <Container>
         <Routes>
           <Route path="/login" element={<LoginForm />} />
+          <Route path="*" element={<NotFound />} />
           <Route element={<PrivateRoute />}>
-            <Route path="/" element={<Controllers />} />
-            <Route path="/controllers" element={<Controllers />} />
+            <Route exact path="/" element={<Controllers />} />
+            <Route exact path="/controllers" element={<Controllers />} />
             <Route
+              exact
               path="controllers/:controllerNumber/boards"
               element={<Boards />}
             />
