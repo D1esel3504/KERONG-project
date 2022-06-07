@@ -8,18 +8,18 @@ import { IBoard, IController } from '../../types/types';
 import BoardsItem from '../../components/BoardsItem/BoardsItem'
 
 type PropsParams = {
-  id: string;
+  controllerNumber: string;
 };
 
 const Boards: FC = () => {
   let [boardList, setBoardList] = useState<IBoard[]>([]);
   let [renderedBoardList, setRenderedBoardList] = useState<IBoard[]>([]);
   let [boardInput, setBoardInput] = useState<string>('');
-  let { id = '' } = useParams<PropsParams>();
+  let { controllerNumber = '' } = useParams<PropsParams>();
   let { controllersList, updateLockInContext } = useContext(Context);
 
   useEffect(() => {
-    let boards = controllersList.find((controller: IController) => controller.ip === id)
+    let boards = controllersList.find((controller: IController, index: number) => String(index) === controllerNumber)
       .boards;
 
     setBoardList(boards);
@@ -27,6 +27,7 @@ const Boards: FC = () => {
     if (renderedBoardList.length === 0) {
       setRenderedBoardList(boards);
     }
+
   }, [controllersList]);
 
   let filterBoards = (numberBoard: string): void => {
@@ -66,7 +67,8 @@ const Boards: FC = () => {
             ? renderedBoardList.map(board => (
               <BoardsItem
                 board={board}
-                id={id}
+                key={board.number}
+                controllerNumber={controllerNumber}
                 filterBoards={filterBoards}
                 updateLockInContext={updateLockInContext}
               />

@@ -5,11 +5,18 @@ import Lock from '../Lock/Lock';
 interface BoardsItemProps {
   board: IBoard;
   filterBoards: (numberBoard: string) => void;
-  id: string;
-  updateLockInContext: (lockNumber: string, data: ILockInfo, ip: string, boardNumber: string) => void;
+  controllerNumber: string;
+  updateLockInContext: (lockNumber: string, data: ILockInfo, controllerNumber: string, boardNumber: string) => void;
 }
 
-const BoardsItem: FC<BoardsItemProps> = ({ board, id, filterBoards, updateLockInContext }) => {
+const BoardsItem: FC<BoardsItemProps> = ({ board, filterBoards, updateLockInContext }) => {
+
+  let handleChangeLockState = (lockNumber: string) => (data: ILockInfo): void => {
+    let [lockControllerNumber, boardNumber] = lockNumber.split(':');
+        
+    updateLockInContext(lockNumber, data, lockControllerNumber, boardNumber);
+  }
+
   return (
     <div>
       <span
@@ -24,9 +31,8 @@ const BoardsItem: FC<BoardsItemProps> = ({ board, id, filterBoards, updateLockIn
             lockNumber: lock,
             ...board.locks[lock],
           }}
-          boardNumber={board.number}
-          id={id}
-          setLock={updateLockInContext}
+          onStateSubmitted={handleChangeLockState(lock)}
+          key={lock}
         />
       ))}
     </div>

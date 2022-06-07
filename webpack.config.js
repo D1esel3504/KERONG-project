@@ -47,6 +47,7 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, './dist'),
         filename: '[name].[contenthash].js',
+        publicPath:'/'
     },
 
     stats: {

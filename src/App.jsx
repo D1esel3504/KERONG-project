@@ -12,9 +12,13 @@ const App = () => {
     <Router>
       <Container>
         <Routes>
-          <Route path="/login" element={<LoginForm />} />
           <Route path="/" element={<Controllers />} />
-          <Route path="/boards/:id" element={<Boards />} />
+          <Route path="/login" element={<LoginForm />} />
+          <Route path="/controllers" element={<Controllers />} />
+          <Route
+            path="controllers/:controllerNumber/boards"
+            element={<Boards />}
+          />
         </Routes>
       </Container>
     </Router>

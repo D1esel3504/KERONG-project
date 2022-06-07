@@ -8,34 +8,35 @@ import { LockProps, ILockInfo } from '../../types/types';
 import axios from 'axios';
 
 interface LockComponentProps extends LockProps {
-  setLock: (lockNumber: string, data: ILockInfo, ip: string, boardNumber: string) => void;
+  onStateSubmitted: (data: ILockInfo) => void;
 }
 
-const Lock: FC<LockComponentProps> = ({ lock, setLock, id, boardNumber }) => {
+const Lock: FC<LockComponentProps> = ({ lock, onStateSubmitted }) => {
   let [isShowEditInput, setisShowEditInput] = useState<boolean>(false);
 
-  // let changeLockInLocalState = async (lockNumber: string, dataLock: ILockInfo) => {
-  //   try {
-  //     await axios({
-  //       method: 'put',
-  //       url: `https://tms-js-pro-back-end.herokuapp.com/api/meet-rooms/${lockNumber}`,
-  //       data: dataLock,
-  //     })
-  //       .then((res) => {
-  //         let result = res.data
+  let changeLockState = async (lockNumber: string, dataLock: ILockInfo) => {
+    // try {
+    //   await axios({
+    //     method: 'put',
+    //     url: `https://tms-js-pro-back-end.herokuapp.com/api/meet-rooms/${lockNumber}`,
+    //     data: dataLock,
+    //   })
+    //     .then((res) => {
+    //       let result = res.data
+    //       console.log(result);
 
-  //         setLock(result);
-  //         setisShowEditInput(false);
-  //       })
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
+    //       onCommentSubmitted(dataLock)
 
-  let changeLockInLocalState = (lockNumber: string, dataLock: ILockInfo, id: string, boardNumber: string) => {
-    setLock(lockNumber, dataLock, id, boardNumber);
+
+    //       setisShowEditInput(false);
+    //     })
+    // } catch (error) {
+    //   console.log(error);
+    // }
+
+    onStateSubmitted(dataLock)
     setisShowEditInput(false);
-  };
+  }
 
   return (
     <>
@@ -47,9 +48,7 @@ const Lock: FC<LockComponentProps> = ({ lock, setLock, id, boardNumber }) => {
           {isShowEditInput ? (
             <EditCommentComponent
               lock={lock}
-              changeLockInLocalState={changeLockInLocalState}
-              id={id}
-              boardNumber={boardNumber}
+              changeLockState={changeLockState}
               setisShowEditInput={setisShowEditInput}
             />
           ) : (
@@ -60,9 +59,7 @@ const Lock: FC<LockComponentProps> = ({ lock, setLock, id, boardNumber }) => {
           )}
           <ChangeStatusButton
             lock={lock}
-            changeLockInLocalState={changeLockInLocalState}
-            id={id}
-            boardNumber={boardNumber}
+            changeLockState={changeLockState}
           />
         </div>
       )}

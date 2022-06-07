@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import './Controllers.scss';
 import { Context } from '../../context';
 import { Button, Typography, Table } from 'antd';
+import { ColumnsType } from 'antd/es/table';
+import { IController } from 'types/types';
 
 const Controllers: FC = () => {
   let navigate = useNavigate();
@@ -12,7 +14,7 @@ const Controllers: FC = () => {
     getAllControllers();
   }, []);
 
-  let columns: any[] = [
+  let columns: ColumnsType<IController> = [
     {
       title: 'Number',
       dataIndex: 'number'
@@ -23,15 +25,15 @@ const Controllers: FC = () => {
     },
     {
       title: 'Boards',
-      render: (boards: any) => (
-        <Button type="primary" danger onClick={() => goToBoard(boards.ip)}>
+      render: (controller: any) => (
+        <Button type="primary" danger onClick={() => goToBoard(controller.number)}>
           GO TO THE BOARDS
         </Button>
       )
     }
   ];
 
-  let goToBoard = (ip: string): void => navigate(`/boards/${ip}`);
+  let goToBoard = (controllerNumber: string): void => navigate(`controllers/${controllerNumber}/boards/`);
 
   return (
     <div>
@@ -43,6 +45,7 @@ const Controllers: FC = () => {
             pagination={false}
             dataSource={controllersList}
             bordered
+            rowKey='ip'
           />
         </div>
       </div>

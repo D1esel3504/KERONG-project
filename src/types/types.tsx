@@ -25,8 +25,6 @@ export interface IController {
 
 export interface LockProps {
     lock: ILockKeys;
-    id: string;
-    boardNumber: string;
 }
 
 export type ILockKeys = {

@@ -3,15 +3,16 @@ import './CheckLocks.scss';
 import Lock from '../Lock/Lock';
 import { Modal, Button, Input, Alert } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
-import { ILock } from '../../types/types';
+import { ILockKeys } from '../../types/types';
 import axios from 'axios';
 
 const CheckLocks: FC = () => {
-  let [lock, setLock] = useState<ILock | null>(null);
+  let [lock, setLock] = useState<ILockKeys | null>(null);
   let [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   let [lockInput, setLockInput] = useState<string>('');
-  let [isShowAlert, setIsShowAlert] = useState<boolean>(false);
+  let [isShowAlertErorr, setIsShowAlertError] = useState<boolean>(false);
   let [showError, setShowError] = useState<string>('');
+  let [isShowAlertSuccess, setIsShowAlertSuccess] = useState<boolean>(false);
 
   let showModal = (): void => {
     setIsModalVisible(true);
@@ -27,8 +28,8 @@ const CheckLocks: FC = () => {
 
   let searchLock = async (lockNumber: string) => {
     try {
-      await axios.get<ILock>(
-        `https://tms-js-pro-back-end.herokuapp.com/api/meet-rooms/${lockNumber}`)
+      await axios.get<ILockKeys>(
+        `https://jsonplaceholder.typicode.com/user/${lockNumber}`)
         .then(res => {
           let result = res.data;
           setLock(result);
@@ -41,22 +42,17 @@ const CheckLocks: FC = () => {
     catch (error) {
       if (axios.isAxiosError(error)) {
         setShowError(error.message)
-        setIsShowAlert(true);
+        setIsShowAlertError(true);
         throw error;
       }
     }
   }
 
-  let handleCommentSubmitted = () => {
-    showModal()
-  }
-
-  let handleOpened = () => {
-    showModal()
+  let handleChangeLockState = (): void => {
+    setIsShowAlertSuccess(true)
   }
 
   return (
-
     <div className="block">
       <strong>CHECK LOCK</strong>
       <div className="search">
@@ -77,13 +73,21 @@ const CheckLocks: FC = () => {
           Search
         </Button>
       </div>
-      {isShowAlert && (
+      {isShowAlertErorr && (
         <Alert
           message="Error"
           description={showError}
           type="error"
           showIcon
           closable
+        />
+      )}
+      {isShowAlertSuccess && (
+        <Alert
+          message="Success"
+          description="Сhanges successfully saved"
+          type="success"
+          showIcon
         />
       )}
       <Modal
@@ -93,12 +97,11 @@ const CheckLocks: FC = () => {
         onCancel={handleCancel}
       >
         {lock !== null && <Lock lock={{
-          lockNumber: lock.number,
+          lockNumber: lock.lockNumber,
           state: lock.state,
           comment: lock.comment
         }}
-          onCommentSubmitted={handleCommentSubmitted}
-          onLockOpened={handleOpened}
+          onStateSubmitted={handleChangeLockState}
         />}
       </Modal>
     </div>

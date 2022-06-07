@@ -6,7 +6,7 @@ import logo from '../../image/logo.jpg';
 import { MOCKED_CONTROLLERS } from '../../mockedData';
 import './Container.scss';
 import { Alert } from 'antd';
-import { IBoard, IController, ILock} from '../../types/types';
+import { IController, ILockKeys } from '../../types/types';
 import axios from 'axios';
 
 interface ContainerProps {
@@ -42,22 +42,14 @@ const Container: FC<ContainerProps> = ({ children }) => {
   //   getAllControllers();
   // }, []);
 
-  
-  let updateLockInContext = (lockNumber: string, data: ILock, ip: string, boardNumber: string): void => {
-    let updatedControllersList: any[] = [...controllersList];
+  let updateLockInContext = (lockNumber: string, data: ILockKeys, controllerNumber: string, boardNumber: string): void => {
+    let updatedControllersList: IController[] = [...controllersList];
 
-    let controllerIndex: number = updatedControllersList
-      .findIndex((controller: IController) => controller.ip === ip);
-
-    let boardIndex: number = updatedControllersList[controllerIndex]
-      .boards.findIndex((board: IBoard) => board.number === boardNumber);
-
-    updatedControllersList[controllerIndex].boards[boardIndex]
+    updatedControllersList[Number(controllerNumber)].boards[Number(boardNumber)]
       .locks[lockNumber] = data;
-      
+
     setControllersList(updatedControllersList);
   };
-  
 
   return (
     <Context.Provider

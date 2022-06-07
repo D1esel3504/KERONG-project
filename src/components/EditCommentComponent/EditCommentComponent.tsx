@@ -5,14 +5,12 @@ import { ILockInfo, LockProps } from '../../types/types';
 
 interface EditCommentComponentProps extends LockProps {
   setisShowEditInput: (param: boolean) => void;
-  changeLockInLocalState: (lockNumber: string, dataLock: ILockInfo, id: string, boardNumber: string) => void;
+  changeLockState: (lockNumber: string, dataLock: ILockInfo) => void;
 }
 
 const EditCommentComponent: FC<EditCommentComponentProps> = ({
-  changeLockInLocalState,
+  changeLockState,
   lock,
-  id,
-  boardNumber,
   setisShowEditInput,
 }) => {
   let [commentInputComponent, setCommentInputComponent] = useState<string>('');
@@ -32,14 +30,12 @@ const EditCommentComponent: FC<EditCommentComponentProps> = ({
             size="large"
             type="primary"
             onClick={() =>
-              changeLockInLocalState(
+              changeLockState(
                 lock.lockNumber,
                 {
                   ...lock,
                   comment: commentInputComponent,
                 },
-                id,
-                boardNumber,
               )
             }
             icon={<SaveFilled />}

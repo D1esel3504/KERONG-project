@@ -22,8 +22,10 @@ const LoginForm: FC = () => {
         },
       })
         .then((res) => {
-          if (res.status === 200) {
-            history('/')
+          if (res.status === 201) {
+            let token: string = '12345'
+            localStorage.setItem("TOKEN", token)
+            history('/controllers')
           }
         })
     } catch (error) {

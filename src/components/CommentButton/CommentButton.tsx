@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { Button, Tooltip } from 'antd';
 import { EditFilled } from '@ant-design/icons';
-import { ILockKeys, LockProps } from '../../types/types';
+import { ILockKeys } from '../../types/types';
 
 interface CommentButtonProps {
   lock: ILockKeys;
