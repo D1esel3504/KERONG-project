@@ -1,0 +1,13 @@
+.header-layout {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+@media screen and (max-width: 1080px) {
+    .header-layout {
+        display: flex;
+        flex-direction: column;
+    }
+};
+    

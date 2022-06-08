@@ -4,6 +4,7 @@ import { Form, Input, Button, Checkbox, Alert } from 'antd';
 import 'antd/dist/antd.css';
 import './LoginForm.scss';
 import axios from 'axios';
+import Header from '../../components/Header/Header';
 
 const LoginForm: FC = () => {
   let history = useNavigate();
@@ -35,6 +36,7 @@ const LoginForm: FC = () => {
 
   return (
     <div className="form">
+      <Header />
       <Form
         name="basic"
         labelCol={{ span: 8 }}

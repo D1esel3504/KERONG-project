@@ -8,22 +8,25 @@ import Controllers from './modules/Controllers';
 import LoginForm from './modules/LoginForm';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 import NotFound from './components/NotFound/NotFound';
+import Layout from './components/Layout';
 
 const App = () => {
   return (
     <Router>
       <Container>
         <Routes>
+          <Route element={<PrivateRoute />}>
+            <Route element={<Layout />}>
+              <Route path="/" element={<Controllers />} />
+              <Route path="/controllers" element={<Controllers />} />
+              <Route
+                path="controllers/:controllerNumber/boards"
+                element={<Boards />}
+              />
+            </Route>
+          </Route>
           <Route path="/login" element={<LoginForm />} />
           <Route path="*" element={<NotFound />} />
-          <Route element={<PrivateRoute />}>
-            <Route path="/" element={<Controllers />} />
-            <Route path="/controllers" element={<Controllers />} />
-            <Route
-              path="controllers/:controllerNumber/boards"
-              element={<Boards />}
-            />
-          </Route>
         </Routes>
       </Container>
     </Router>

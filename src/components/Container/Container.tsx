@@ -1,6 +1,4 @@
 import React, { FC, useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import CheckLocks from '../CheckLocks';
 import { Context } from '../../context';
 import logo from '../../image/logo.jpg';
 import { MOCKED_CONTROLLERS } from '../../mockedData';
@@ -16,7 +14,6 @@ interface ContainerProps {
 const Container: FC<ContainerProps> = ({ children }) => {
   let [controllersList, setControllersList] = useState<IController[]>([]);
   let [isShowAlert, setIsShowAlert] = useState<boolean>(false);
-  let location = useLocation();
 
   let getAllControllers = async () => {
     let controllers: any[] = await Promise.resolve(MOCKED_CONTROLLERS);
@@ -56,12 +53,6 @@ const Container: FC<ContainerProps> = ({ children }) => {
       value={{ controllersList, getAllControllers, updateLockInContext }}
     >
       <div className="container">
-        <div className="header">
-          <img className="header__logo" alt="logo" src={logo} />
-          {location.pathname !== '/login'
-            && location.pathname === undefined
-            && <CheckLocks />}
-        </div>
         <div>{children}</div>
         {isShowAlert && (
           <Alert
