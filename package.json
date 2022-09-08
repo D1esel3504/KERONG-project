@@ -1,6 +1,7 @@
 {
   "name": "kerong-project",
   "version": "0.1.0",
+  "homepage": ".",
   "private": true,
   "dependencies": {
     "@babel/plugin-syntax-jsx": "^7.17.12",
