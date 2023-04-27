@@ -1,18 +1,20 @@
-import React, { useEffect, useContext } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import React, { useEffect, useContext, FC } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Controllers.scss';
 import { Context } from '../../context';
 import { Button, Typography, Table } from 'antd';
+import { ColumnsType } from 'antd/es/table';
+import { IController } from 'types/types';
 
-const Controllers = () => {
+const Controllers: FC = () => {
   let navigate = useNavigate();
-  let { controllersList, getControllers } = useContext(Context);
+  let { controllersList, getAllControllers } = useContext(Context);
 
   useEffect(() => {
-    getControllers();
+    getAllControllers();
   }, []);
 
-  let columns = [
+  let columns: ColumnsType<IController> = [
     {
       title: 'Number',
       dataIndex: 'number'
@@ -23,15 +25,15 @@ const Controllers = () => {
     },
     {
       title: 'Boards',
-      render: boards => (
-        <Button type="primary" danger onClick={() => goToBoard(boards.ip)}>
+      render: (controller: any) => (
+        <Button type="primary" danger onClick={() => goToBoard(controller.number)}>
           GO TO THE BOARDS
         </Button>
       )
     }
   ];
 
-  let goToBoard = ip => navigate(`/boards/${ip}`);
+  let goToBoard = (controllerNumber: string): void => navigate(`controllers/${controllerNumber}/boards/`);
 
   return (
     <div>
@@ -43,6 +45,7 @@ const Controllers = () => {
             pagination={false}
             dataSource={controllersList}
             bordered
+            rowKey='ip'
           />
         </div>
       </div>

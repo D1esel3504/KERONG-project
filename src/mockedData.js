@@ -1,88 +1,113 @@
 export const MOCKED_CONTROLLERS = [
   {
-    number: 1,
+    number: 0,
     ip: '10.3.2.5',
     boards: [
       {
+        number: 0,
+        locks: {
+          '0:00:00': {
+            state: 'closed',
+            comment: ''
+          },
+          '0:00:01': {
+            state: 'closed',
+            comment: ''
+          }
+        }
+      },
+      {
         number: 1,
         locks: {
-          '0:00:99': {
+          '0:01:00': {
             state: 'closed',
             comment: ''
           },
-          '0:00:66': {
-            state: 'closed',
-            comment: ''
-          },
-          '0:00:77': {
+          '0:01:01': {
             state: 'closed',
             comment: ''
           }
         }
       },
       {
-        number: 23,
+        number: 2,
         locks: {
-          '0:00:99': {
+          '0:02:00': {
             state: 'closed',
             comment: ''
           },
-          '0:00:66': {
-            state: 'closed',
-            comment: ''
-          },
-          '0:00:77': {
+          '0:02:01': {
             state: 'closed',
             comment: ''
           }
         }
       },
       {
-        number: 2343454,
+        number: 3,
         locks: {
-          '0:00:99': {
+          '0:03:00': {
             state: 'closed',
             comment: ''
           },
-          '0:00:66': {
+          '0:03:01': {
+            state: 'closed',
+            comment: ''
+          }
+        }
+      }
+    ]
+  },
+  {
+    number: 1,
+    ip: '10.3.2.6',
+    boards: [
+      {
+        number: 0,
+        locks: {
+          '1:00:00': {
             state: 'closed',
             comment: ''
           },
-          '0:00:77': {
+          '1:00:01': {
             state: 'closed',
             comment: ''
           }
         }
       },
       {
-        number: 115,
+        number: 1,
         locks: {
-          '0:00:99': {
+          '1:01:00': {
             state: 'closed',
             comment: ''
           },
-          '0:00:66': {
-            state: 'closed',
-            comment: ''
-          },
-          '0:00:77': {
+          '1:01:01': {
             state: 'closed',
             comment: ''
           }
         }
       },
       {
-        number: 117,
+        number: 2,
         locks: {
-          '0:00:99': {
+          '1:02:00': {
             state: 'closed',
             comment: ''
           },
-          '0:00:66': {
+          '1:02:01': {
+            state: 'closed',
+            comment: ''
+          }
+        }
+      },
+      {
+        number: 3,
+        locks: {
+          '1:03:00': {
             state: 'closed',
             comment: ''
           },
-          '0:00:77': {
+          '1:03:01': {
             state: 'closed',
             comment: ''
           }
@@ -92,20 +117,29 @@ export const MOCKED_CONTROLLERS = [
   },
   {
     number: 2,
-    ip: '10.3.2.6',
+    ip: '10.3.2.9',
     boards: [
+      {
+        number: 0,
+        locks: {
+          '2:00:00': {
+            state: 'closed',
+            comment: ''
+          },
+          '2:00:01': {
+            state: 'closed',
+            comment: ''
+          }
+        }
+      },
       {
         number: 1,
         locks: {
-          '0:00:99': {
+          '2:01:00': {
             state: 'closed',
             comment: ''
           },
-          '0:00:66': {
-            state: 'closed',
-            comment: ''
-          },
-          '0:00:77': {
+          '2:01:01': {
             state: 'closed',
             comment: ''
           }
@@ -114,15 +148,11 @@ export const MOCKED_CONTROLLERS = [
       {
         number: 2,
         locks: {
-          '0:00:99': {
+          '2:02:00': {
             state: 'closed',
             comment: ''
           },
-          '0:00:66': {
-            state: 'closed',
-            comment: ''
-          },
-          '0:00:77': {
+          '2:02:01': {
             state: 'closed',
             comment: ''
           }
@@ -131,72 +161,11 @@ export const MOCKED_CONTROLLERS = [
       {
         number: 3,
         locks: {
-          '0:00:99': {
+          '2:03:00': {
             state: 'closed',
             comment: ''
           },
-          '0:00:66': {
-            state: 'closed',
-            comment: ''
-          },
-          '0:00:77': {
-            state: 'closed',
-            comment: ''
-          }
-        }
-      }
-    ]
-  },
-  {
-    number: 3,
-    ip: '10.3.2.7',
-    boards: [
-      {
-        number: 1,
-        locks: {
-          '0:00:99': {
-            state: 'closed',
-            comment: ''
-          },
-          '0:00:66': {
-            state: 'closed',
-            comment: ''
-          },
-          '0:00:77': {
-            state: 'closed',
-            comment: ''
-          }
-        }
-      },
-      {
-        number: 2,
-        locks: {
-          '0:00:99': {
-            state: 'closed',
-            comment: ''
-          },
-          '0:00:66': {
-            state: 'closed',
-            comment: ''
-          },
-          '0:00:77': {
-            state: 'closed',
-            comment: ''
-          }
-        }
-      },
-      {
-        number: 3,
-        locks: {
-          '0:00:99': {
-            state: 'closed',
-            comment: ''
-          },
-          '0:00:66': {
-            state: 'closed',
-            comment: ''
-          },
-          '0:00:77': {
+          '2:03:01': {
             state: 'closed',
             comment: ''
           }

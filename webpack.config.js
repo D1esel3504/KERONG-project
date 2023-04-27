@@ -28,8 +28,6 @@ let optimization = () => {
     return config
 }
 
-
-
 module.exports = {
     entry: {
         main: path.resolve(__dirname, './src/index.js'),
@@ -40,6 +38,7 @@ module.exports = {
     devServer: {
         port: 3000,
         hot: isDev,
+        historyApiFallback: true,
         static: {
             directory: path.join(__dirname, './public'),
         },
@@ -48,6 +47,7 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, './dist'),
         filename: '[name].[contenthash].js',
+        publicPath:'/'
     },
 
     stats: {
@@ -101,10 +101,15 @@ module.exports = {
                 test: /\.(scss|css)$/,
                 use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
             },
+            {
+                test: /\.(ts|tsx)$/,
+                exclude: /node_modules/,
+                use: ['babel-loader']
+            },
         ],
     },
 
     resolve: {
-        extensions: ['.js', '.jsx', '.css'],
+        extensions: ['.js', '.jsx', '.ts', '.tsx', '.css'],
     },
 }
